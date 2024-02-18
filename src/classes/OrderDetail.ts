@@ -1,8 +1,8 @@
 export interface OrderDetail {
     id: number;
-    orderId: number;
-    productId: number;
+    order_id: number;
+    product_id: number;
     quantity: number;
     price: number;
-    subTotal: number;
+    subtotal: number;
 }

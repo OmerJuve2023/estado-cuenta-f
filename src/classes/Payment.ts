@@ -1,6 +1,6 @@
 export interface Payment {
     id: number;
-    orderId: number;
+    order_id: number;
     amount: number;
-    paymentDate: string;
+    payment_date: Date;
 }
