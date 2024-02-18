@@ -1,6 +1,6 @@
 import Customer from "../../classes/Customer.ts";
 
-export function viewCustomer(customers: [Customer]) {
+export default function viewCustomer(customers: [Customer]) {
     return (
         <div className="container">
             <h1 className="mb-4">Clientes</h1>
