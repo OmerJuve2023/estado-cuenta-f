@@ -1,8 +1,7 @@
 export interface Orders {
     id: number;
-    customer: string;
-    product: string;
-    quantity: number;
-    total: number;
-    status: boolean;
+    customer_id: number;
+    order_date: Date;
+    total_amount: number;
+    status: string;
 }
