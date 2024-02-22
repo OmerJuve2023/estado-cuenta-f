@@ -1,66 +1,56 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import Customer from "../classes/Customer.ts";
-import {listCustomers} from "../services/customerService.ts";
-import viewCustomer from "../functions/customer/viewCustomer.tsx";
 import PaginationTable from "../components/PaginationTable.tsx";
+import AddCustomerForm from "../functions/customer/AddCustomerForm.tsx";
+import ViewCustomer from "../functions/customer/ViewCustomer.tsx";
+import {useCustomers} from "../functions/customer/CustomerService.ts";
+import {useUI} from "../functions/customer/FilterCustomer.ts";
+import {FaUserPlus} from 'react-icons/fa';
+import "../CSS/CustomerStyle.css";
 
 export function DataViewCustomer() {
-    const [customers, setCustomers] = useState<Customer[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [filteredProducts, setFilteredCustomer] = useState<Customer[]>([]);
-    const [searchTerm, setSearchTerm] = useState("");
-
-    useEffect(() => {
-        const fetchCustomers = async () => {
-            setLoading(true);
-            try {
-                const customersList = await listCustomers();
-                setCustomers(customersList)
-                setFilteredCustomer(customersList)
-            } catch (error) {
-                console.error("Error fetching customers:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchCustomers().then(r => console.log(r));
-    }, []);
-
-    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value);
-        filterCustomers(event.target.value);
-    };
-
-    const filterCustomers = (term: string) => {
-        const filtered = customers.filter(customer => {
-            return customer.name.toLowerCase().includes(term.toLowerCase());
-        });
-        setFilteredCustomer(filtered);
-    };
-    const currentCustomers = filteredProducts.slice(0, 10);
+    const {customers, updateCustomers} = useCustomers();
+    const {searchTerm, handleSearch, showModal, handleModalToggle} = useUI();
+    const filteredCustomers = customers.filter(customer => {
+        return customer.name.toLowerCase().includes(searchTerm.toLowerCase());
+    });
 
     return (
-        loading ? (
-            <div>Loading...</div>
-        ) : (
-
-            <div className="container">
-                <h1 className="mb-4">Clientes</h1>
-                <div className="mb-4">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Buscar por nombre"
-                        value={searchTerm}
-                        onChange={handleSearch}
-                    />
+        <div className="container">
+            <h1 className="mb-4 mt-5 text-center clientes-title display-4 display-md-3">Gestión de Clientes</h1>
+            <div className="mb-4 row align-items-center"> {/* Contenedor para el campo de búsqueda y el botón */}
+                <div className="col-sm-8 col-md-6"> {/* Columna para el campo de búsqueda */}
+                    <div className="input-group search-bar">
+                        <input
+                            style={{
+                                boxShadow: "none",
+                            }}
+                            type="search"
+                            className="form-control search-input" // Aplicamos la clase personalizada al campo de búsqueda
+                            placeholder="Buscar por nombre"
+                            value={searchTerm}
+                            onChange={handleSearch}
+                        />
+                    </div>
                 </div>
-                <PaginationTable<Customer> items={customers} itemsPerPage={10}>
-                    {() => (
-                        viewCustomer(currentCustomers as [Customer])
-                    )}
-                </PaginationTable>
+                <div className="col-sm-4 col-md-6 mt-3 mt-sm-0"> {/* Columna para el botón */}
+                    <div className="d-grid"> {/* Utilizamos una cuadrícula (grid) */}
+                        <button className="btn btn-custom btn-block"
+                                onClick={handleModalToggle}> {/* Aplicamos la clase personalizada al botón y lo hacemos ocupar toda la fila */}
+                            <FaUserPlus className="me-1"/>
+                            Agregar Cliente
+                        </button>
+                    </div>
+                </div>
             </div>
-        )
-    )
+            <PaginationTable<Customer> items={filteredCustomers} itemsPerPage={10}>
+                {ViewCustomer as (items: Customer[]) => React.ReactNode}
+            </PaginationTable>
+            <AddCustomerForm
+                showModal={showModal}
+                handleModalToggle={handleModalToggle}
+                updateCustomerList={updateCustomers}
+            />
+        </div>
+    );
 }

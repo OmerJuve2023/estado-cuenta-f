@@ -1,0 +1,85 @@
+.add-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 400px;
+    width: 90%; /* Ajuste del ancho del modal */
+    margin: 0 auto;
+    padding: 20px;
+    background: linear-gradient(45deg, #FF5733, #FFC300); /* Fondo de degradado */
+    border-radius: 10px; /* Redondear los bordes del modal */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Efecto de transición suave al abrir y cerrar el modal */
+}
+
+.add-modal-content {
+    opacity: 0; /* Inicialmente el contenido del modal estará invisible */
+    transition: opacity 0.3s ease; /* Efecto de transición suave al mostrar el contenido */
+}
+
+.btn {
+    margin: 0 5px; /* Aumentar el espacio entre botones */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil al pasar el cursor sobre el botón */
+    color: #fff; /* Color de texto blanco */
+    border-radius: revert;
+    border: none;
+    outline: none;
+}
+
+.add-modal.open {
+    transform: translate(-50%, -50%) scale(1); /* Escalamos el modal al abrirlo */
+}
+
+.add-modal.open .add-modal-content {
+    opacity: 1; /* Mostramos el contenido del modal cuando esté abierto */
+}
+
+#btn-primary {
+    background-color: rgba(255, 0, 200, 0.63); /* Rosa */
+    box-shadow: none;
+}
+
+#btn-secondary {
+    /* Estilos del botón secundario */
+    background-color: #e74c3c; /* Rojo */
+}
+
+#btn-primary:hover {
+    background-color: #d53e3e; /* Color de fondo al pasar el cursor */
+}
+
+.modal-title {
+    font-size: 24px; /* Tamaño de fuente más grande para el título */
+    color: #fff; /* Color de texto blanco */
+    margin-bottom: 20px; /* Espaciado inferior */
+}
+
+.form-group label {
+    color: #fff; /* Color de texto blanco para las etiquetas */
+}
+
+.form-group input {
+    border-radius: 5px; /* Bordes redondeados para los campos de entrada */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    padding: 10px; /* Ajuste del relleno */
+    margin-bottom: 15px; /* Espaciado inferior */
+    border: none; /* Quitamos el borde por defecto */
+    background-color: rgba(255, 255, 255, 0.5); /* Color de fondo semi-transparente */
+    color: #fff; /* Color de texto blanco */
+    transition: background-color 0.3s ease; /* Efecto de transición suave */
+}
+
+.form-group input:focus {
+    background-color: rgba(255, 255, 255, 0.7); /* Color de fondo semi-transparente al enfocar */ /* Quitamos el contorno al enfocar */
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Color de fondo oscuro con transparencia */
+    z-index: 1000; /* Asegura que el overlay esté por encima del resto del contenido */
+}

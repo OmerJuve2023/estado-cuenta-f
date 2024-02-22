@@ -1,10 +1,10 @@
 import {Orders} from "../../classes/Orders.ts";
+import "../../CSS/TableStyle.css";
 
 export function viewOrder(orders: [Orders]) {
     return (
-        <div className="container">
-            <h1 className="mb-4">Orders</h1>
-            <table className="table table-hover">
+        <div className="table-responsive">
+            <table className="table table-hover table-custom">
                 <thead className="thead-dark">
                 <tr>
                     <th scope="col">ID</th>

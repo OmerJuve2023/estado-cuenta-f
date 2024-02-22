@@ -1,0 +1,39 @@
+.btn-custom {
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    color: #fff !important; /* Color de texto blanco */
+    background: linear-gradient(45deg, #FF5733, #FFC300); /* Degradado de color de fondo */
+    border: none; /* Eliminar borde */
+}
+
+.btn-custom:hover {
+    filter: brightness(110%); /* Aumentar brillo al pasar el mouse */
+}
+
+.search-input {
+    border: 2px solid transparent; /* Borde transparente para ocultar el borde predeterminado */
+    border-radius: 5px; /* Redondear los bordes */
+    padding: 8px 12px; /* Ajustar el relleno */
+    transition: border-color 0.3s ease; /* Efecto de transición */
+    box-shadow: none; /* Eliminar la sombra */
+}
+
+.search-input:focus {
+    border-color: #FF5733 !important; /* Cambiar el color del borde al enfocar */
+    outline: none; /* Eliminar el contorno */
+}
+
+.clientes-title {
+    font-size: 3rem; /* Ajustar el tamaño del texto */
+    font-weight: bold;
+    background: linear-gradient(45deg, #FF5733, #FFC300); /* Degradado de color de fondo */
+    -webkit-background-clip: text; /* Clip de texto al fondo */
+    -webkit-text-fill-color: transparent; /* Relleno de texto transparente */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); /* Ajustar el sombreado */
+}
+

@@ -4,7 +4,6 @@ export function viewProduct(products: [Product]) {
 
     return (
         <div className="container">
-            <h1 className="mb-4">Productos</h1>
             <table className="table table-hover">
                 <thead className="thead-dark">
                 <tr>

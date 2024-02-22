@@ -1,11 +1,10 @@
+import React, {useEffect, useState} from "react";
 import Product from "../classes/Product.ts";
-import {useEffect, useState} from "react";
 import {listProducts} from "../services/productService.ts";
 import {viewProduct} from "../functions/product/ViewProduct.tsx";
 import PaginationTable from "./PaginationTable.tsx";
 
 export function DataViewProduct() {
-
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(false);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
@@ -16,8 +15,8 @@ export function DataViewProduct() {
             setLoading(true);
             try {
                 const productsList = await listProducts();
-                setProducts(productsList)
-                setFilteredProducts(productsList)
+                setProducts(productsList);
+                setFilteredProducts(productsList);
             } catch (error) {
                 console.error("Error fetching products:", error);
             } finally {
@@ -39,8 +38,6 @@ export function DataViewProduct() {
         setFilteredProducts(filtered);
     };
 
-    const currentProducts = filteredProducts.slice(0, 10);
-
     return (
         loading ? (
             <div>Loading...</div>
@@ -56,10 +53,8 @@ export function DataViewProduct() {
                         onChange={handleSearch}
                     />
                 </div>
-                <PaginationTable<Product> items={products} itemsPerPage={4}>
-                    {() => (
-                        viewProduct(currentProducts as [Product])
-                    )}
+                <PaginationTable<Product> items={filteredProducts} itemsPerPage={7}>
+                    {viewProduct as (items: Product[]) => React.ReactNode}
                 </PaginationTable>
             </div>
         )
