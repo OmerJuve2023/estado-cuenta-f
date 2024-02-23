@@ -1,6 +1,5 @@
 import React, {useState} from "react";
-import Customer from "../../classes/Customer.ts";
-import {createCustomer} from "../../services/customerService.ts";
+import {addCustomer, createCustomer} from "../../services/customerService.ts";
 import Modal from "react-modal";
 import "../../CSS/AddForm.css";
 
@@ -11,18 +10,16 @@ interface AddCustomerFormProps {
 }
 
 Modal.setAppElement('#root');
-const AddCustomerForm: React.FC<AddCustomerFormProps> = ({
-                                                             showModal,
-                                                             handleModalToggle,
-                                                             updateCustomerList,
-                                                         }) => {
-    const [newCustomerData, setNewCustomerData] = useState<Customer>({
-        id: 0,
-        name: "",
-        email: "",
-        phone: "",
-        address: "",
-    });
+const AddCustomerForm: React.FC<AddCustomerFormProps> = ({showModal, handleModalToggle, updateCustomerList,}) => {
+    const [newCustomerData, setNewCustomerData]
+        = useState<addCustomer>(
+        {
+            name: "",
+            email: "",
+            phone: "",
+            address: "",
+        }
+    );
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;

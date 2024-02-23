@@ -1,10 +1,9 @@
 import Modal from "react-modal";
 import "../../CSS/AddForm.css";
-import {createOrder} from "../../services/OrdersService.ts";
+import {addOrder, createOrder} from "../../services/OrdersService.ts";
 import React, {useState} from "react";
-import {Orders} from "../../classes/Orders.ts";
 
-interface AddOrderForm {
+interface AddOrderFormProps {
     showModal: boolean;
     handleModalToggle: () => void;
     updateOrderList: () => void;
@@ -12,23 +11,18 @@ interface AddOrderForm {
 
 Modal.setAppElement('#root');
 
-const AddOrderForm: React.FC<AddOrderForm> = ({showModal, handleModalToggle, updateOrderList}) => {
-    const [newOrderData, setNewOrderData] = useState<Orders>({
-        id: 0,
-        customer_id: 0,
-        order_date: new Date(),
-        total_amount: 0,
-        status: "pending",
-    });
+const AddOrderForm: React.FC<AddOrderFormProps> = ({showModal, handleModalToggle, updateOrderList}) => {
+    const [newOrderData, setNewOrderData] = useState<addOrder>(
+        {
+            customer_id: 0,
+            quantity: 0,
+            status: "pending"
+        }
+    );
+
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
-        if (name === 'order_date') {
-            // Convertir el valor de la entrada en un objeto Date
-            const dateValue = new Date(value);
-            setNewOrderData({...newOrderData, [name]: dateValue});
-        } else {
-            setNewOrderData({...newOrderData, [name]: value});
-        }
+        setNewOrderData({...newOrderData, [name]: value});
     };
 
     const handleCreateOrder = async () => {
@@ -41,7 +35,6 @@ const AddOrderForm: React.FC<AddOrderForm> = ({showModal, handleModalToggle, upd
             console.error("Error creating order:", error);
         }
     };
-
 
     return (
         <>
@@ -66,24 +59,13 @@ const AddOrderForm: React.FC<AddOrderForm> = ({showModal, handleModalToggle, upd
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="order_date">Order Date</label>
-                        <input
-                            type="date"
-                            className="form-control"
-                            id="order_date"
-                            name="order_date"
-                            value={newOrderData.order_date.toISOString().split('T')[0]}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                    <div className="form-group">
                         <label htmlFor="total_amount">Total Amount</label>
                         <input
                             type="number"
                             className="form-control"
                             id="total_amount"
                             name="total_amount"
-                            value={newOrderData.total_amount}
+                            value={newOrderData.quantity}
                             onChange={handleInputChange}
                         />
                     </div>

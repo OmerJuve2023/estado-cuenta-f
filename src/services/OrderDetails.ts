@@ -1,7 +1,15 @@
 import {api} from "./apiService";
 import {OrderDetail} from "../classes/OrderDetail.ts";
 
-export const createOrderDetail = async (orderDetail: OrderDetail) => {
+export interface addOrderDetail {
+    order_id: number;
+    product_id: number;
+    quantity: number;
+    price: number;
+    subtotal: string;
+}
+
+export const createOrderDetail = async (orderDetail: addOrderDetail) => {
     const response = await api.post('/orderDetail/add', orderDetail);
     return response.data;
 }

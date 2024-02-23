@@ -1,6 +1,12 @@
 import {api} from "./apiService.ts";
 import Product from "../classes/Product.ts";
 
+export interface addProduct {
+    name: string;
+    price: number;
+    description: string;
+}
+
 export const listProducts = async () => {
     const response = await api.get('/product/list');
     console.log(response.data)
@@ -18,7 +24,7 @@ export const getProduct = async (id: number) => {
     const response = await api.get(`/product/${id}`);
     return response.data;
 }
-export const createProduct = async (Product: Product) => {
+export const createProduct = async (Product: addProduct) => {
     const response = await api.post('/product/add', Product);
     return response.data;
 }
