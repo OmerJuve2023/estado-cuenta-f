@@ -9,9 +9,9 @@ import {FaUserPlus} from 'react-icons/fa';
 import "../CSS/CustomerStyle.css";
 
 export function DataViewCustomer() {
-    const {customers, updateCustomers} = useCustomers();
+    const {orderDetails, updateCustomers} = useCustomers();
     const {searchTerm, handleSearch, showModal, handleModalToggle} = useUI();
-    const filteredCustomers = customers.filter(customer => {
+    const filteredCustomers = orderDetails.filter(customer => {
         return customer.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
 

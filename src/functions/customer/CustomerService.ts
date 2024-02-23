@@ -30,5 +30,5 @@ export function useCustomers() {
             console.error("Error updating customers:", error);
         }
     };
-    return {customers, loading, updateCustomers};
+    return {orderDetails: customers, loading, updateCustomers};
 }

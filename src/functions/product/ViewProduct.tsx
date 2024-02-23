@@ -1,11 +1,11 @@
 import Product from "../../classes/Product.ts";
-
+import "../../CSS/TableStyle.css";
 export function viewProduct(products: [Product]) {
 
     return (
-        <div className="container">
-            <table className="table table-hover">
-                <thead className="thead-dark">
+        <div className="table-responsive">
+            <table className="table table-hover table-custom">
+                <thead>
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Nombre</th>

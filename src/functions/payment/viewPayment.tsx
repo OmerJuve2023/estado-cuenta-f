@@ -1,10 +1,9 @@
 import {Payment} from "../../classes/Payment.ts";
-
+import "../../CSS/TableStyle.css";
 export function viewPayment(payments: Payment[]) {
     return (
-        <div className={"container"}>
-            <h1 className={"mb-4"}>Payment</h1>
-            <table className="table table-striped">
+        <div className={"table-responsive"}>
+            <table className="table table-hover table-custom">
                 <thead>
                 <tr>
                     <th scope="col">ID</th>

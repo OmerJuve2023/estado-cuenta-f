@@ -1,10 +1,9 @@
 import {OrderDetail} from "../../classes/OrderDetail.ts";
-
+import "../../CSS/TableStyle.css";
 export function viewOrderDetail(orderDetails: [OrderDetail]) {
     return (
-        <div className="container">
-            <h1 className="mb-4">Order Details</h1>
-            <table className="table table-hover">
+        <div className="table-responsive">
+            <table className="table table-hover table-custom">
                 <thead className="thead-dark">
                 <tr>
                     <th scope="col">ID</th>

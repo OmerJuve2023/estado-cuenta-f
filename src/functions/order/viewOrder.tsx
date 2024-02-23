@@ -5,7 +5,7 @@ export function viewOrder(orders: [Orders]) {
     return (
         <div className="table-responsive">
             <table className="table table-hover table-custom">
-                <thead className="thead-dark">
+                <thead>
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">ID Customer</th>

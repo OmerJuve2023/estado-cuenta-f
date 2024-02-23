@@ -6,7 +6,7 @@ export interface addOrderDetail {
     product_id: number;
     quantity: number;
     price: number;
-    subtotal: string;
+    subtotal: number;
 }
 
 export const createOrderDetail = async (orderDetail: addOrderDetail) => {
