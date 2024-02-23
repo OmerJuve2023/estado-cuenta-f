@@ -1,62 +1,53 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import Product from "../classes/Product.ts";
-import {listProducts} from "../services/productService.ts";
 import {viewProduct} from "../functions/product/ViewProduct.tsx";
 import PaginationTable from "./PaginationTable.tsx";
+import {useUI} from "../functions/FilterCustomer.ts";
+import {useProducts} from "../functions/product/ProductService.ts";
+import {FaUserPlus} from "react-icons/fa";
 
 export function DataViewProduct() {
-    const [products, setProducts] = useState<Product[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-    const [searchTerm, setSearchTerm] = useState("");
-
-    useEffect(() => {
-        const fetchProducts = async () => {
-            setLoading(true);
-            try {
-                const productsList = await listProducts();
-                setProducts(productsList);
-                setFilteredProducts(productsList);
-            } catch (error) {
-                console.error("Error fetching products:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchProducts().then(r => console.log(r));
-    }, []);
-
-    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value);
-        filterProducts(event.target.value);
-    };
-
-    const filterProducts = (term: string) => {
-        const filtered = products.filter(product => {
-            return product.name.toLowerCase().includes(term.toLowerCase());
-        });
-        setFilteredProducts(filtered);
-    };
-
+    const {products, updateProducts} = useProducts();
+    const {searchTerm, handleSearch, showModal, handleModalToggle} = useUI();
+    const filteredProducts = products.filter(customer => {
+        return customer.name.toLowerCase().includes(searchTerm.toLowerCase());
+    });
     return (
-        loading ? (
-            <div>Loading...</div>
-        ) : (
-            <div className="container">
-                <h1 className="mb-4">Productos</h1>
-                <div className="mb-4">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Buscar por nombre"
-                        value={searchTerm}
-                        onChange={handleSearch}
-                    />
+        <div className="container">
+            <h1 className="mb-4 mt-5 text-center clientes-title display-4 display-md-3">Gestión de Clientes</h1>
+            <div className="mb-4 row align-items-center"> {/* Contenedor para el campo de búsqueda y el botón */}
+                <div className="col-sm-8 col-md-6"> {/* Columna para el campo de búsqueda */}
+                    <div className="input-group search-bar">
+                        <input
+                            style={{
+                                boxShadow: "none",
+                            }}
+                            type="search"
+                            className="form-control search-input" // Aplicamos la clase personalizada al campo de búsqueda
+                            placeholder="Buscar por nombre"
+                            value={searchTerm}
+                            onChange={handleSearch}
+                        />
+                    </div>
                 </div>
-                <PaginationTable<Product> items={filteredProducts} itemsPerPage={7}>
-                    {viewProduct as (items: Product[]) => React.ReactNode}
-                </PaginationTable>
+                <div className="col-sm-4 col-md-6 mt-3 mt-sm-0"> {/* Columna para el botón */}
+                    <div className="d-grid"> {/* Utilizamos una cuadrícula (grid) */}
+                        <button className="btn btn-custom btn-block"
+                                onClick={handleModalToggle}> {/* Aplicamos la clase personalizada al botón y lo hacemos ocupar toda la fila */}
+                            <FaUserPlus className="me-1"/>
+                            Agregar Cliente
+                        </button>
+                    </div>
+                </div>
             </div>
-        )
+            <PaginationTable<Product> items={filteredProducts} itemsPerPage={7}>
+                {viewProduct as (items: Product[]) => React.ReactNode}
+            </PaginationTable>
+            <AddProductForm
+                showModal={showModal}
+                handleModalToggle={handleModalToggle}
+                updateProductList={updateProducts}
+            />
+        </div>
     )
 }

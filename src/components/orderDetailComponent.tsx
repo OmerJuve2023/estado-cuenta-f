@@ -3,7 +3,7 @@ import {OrderDetail} from "../classes/OrderDetail.ts";
 import PaginationTable from "./PaginationTable.tsx";
 import {useUI} from "../functions/FilterCustomer.ts";
 import {useOrderDetail} from "../functions/orderDetail/orderDetailService.ts";
-import "../CSS/CustomerStyle.css";
+import "../CSS/ComponentStyle.css";
 import React from "react";
 import AddOrderDetailForm from "../functions/orderDetail/AddOrderDetailForm.tsx";
 import {FaUserPlus} from "react-icons/fa";

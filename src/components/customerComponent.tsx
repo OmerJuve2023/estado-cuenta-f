@@ -6,12 +6,12 @@ import ViewCustomer from "../functions/customer/ViewCustomer.tsx";
 import {useCustomers} from "../functions/customer/CustomerService.ts";
 import {useUI} from "../functions/FilterCustomer.ts";
 import {FaUserPlus} from 'react-icons/fa';
-import "../CSS/CustomerStyle.css";
+import "../CSS/ComponentStyle.css";
 
 export function DataViewCustomer() {
-    const {orderDetails, updateCustomers} = useCustomers();
+    const {customers, updateCustomers} = useCustomers();
     const {searchTerm, handleSearch, showModal, handleModalToggle} = useUI();
-    const filteredCustomers = orderDetails.filter(customer => {
+    const filteredCustomers = customers.filter(customer => {
         return customer.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
 
