@@ -4,7 +4,7 @@ import {viewOrder} from "../functions/order/viewOrder.tsx";
 import PaginationTable from "./PaginationTable.tsx";
 import "../CSS/CustomerStyle.css";
 import {FaUserPlus} from "react-icons/fa";
-import {useUI} from "../functions/customer/FilterCustomer.ts";
+import {useUI} from "../functions/FilterCustomer.ts";
 import AddOrderForm from "../functions/order/AddOrderFormProps.tsx";
 import {useOrders} from "../functions/order/OrderService.ts";
 

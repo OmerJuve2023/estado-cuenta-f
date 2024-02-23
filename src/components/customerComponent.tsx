@@ -4,7 +4,7 @@ import PaginationTable from "../components/PaginationTable.tsx";
 import AddCustomerForm from "../functions/customer/AddCustomerForm.tsx";
 import ViewCustomer from "../functions/customer/ViewCustomer.tsx";
 import {useCustomers} from "../functions/customer/CustomerService.ts";
-import {useUI} from "../functions/customer/FilterCustomer.ts";
+import {useUI} from "../functions/FilterCustomer.ts";
 import {FaUserPlus} from 'react-icons/fa';
 import "../CSS/CustomerStyle.css";
 
