@@ -1,12 +1,12 @@
 import React from "react";
 import {Orders} from "../classes/Orders.ts";
-import {viewOrder} from "../functions/order/viewOrder.tsx";
 import PaginationTable from "./PaginationTable.tsx";
 import "../CSS/ComponentStyle.css";
 import {FaUserPlus} from "react-icons/fa";
 import {useUI} from "../functions/FilterCustomer.ts";
 import AddOrderForm from "../functions/order/AddOrderFormProps.tsx";
 import {useOrders} from "../functions/order/OrderService.ts";
+import viewOrder from "../functions/order/viewOrder.tsx";
 
 export function DataViewOrder() {
     const {orders, updateOrders} = useOrders();

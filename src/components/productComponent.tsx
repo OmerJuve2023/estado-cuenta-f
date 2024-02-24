@@ -1,11 +1,11 @@
 import React from "react";
 import Product from "../classes/Product.ts";
-import {viewProduct} from "../functions/product/ViewProduct.tsx";
 import PaginationTable from "./PaginationTable.tsx";
 import {useUI} from "../functions/FilterCustomer.ts";
 import {useProducts} from "../functions/product/ProductService.ts";
 import {FaUserPlus} from "react-icons/fa";
 import AddProductForm from "../functions/product/AddProduct.tsx";
+import viewProduct from "../functions/product/ViewProduct.tsx";
 
 export function DataViewProduct() {
     const {products, updateProducts} = useProducts();

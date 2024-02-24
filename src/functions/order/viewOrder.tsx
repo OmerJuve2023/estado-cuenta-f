@@ -1,31 +1,32 @@
 import {Orders} from "../../classes/Orders.ts";
 import "../../CSS/CardStyle.css";
 
-export function viewOrder(orders: [Orders]) {
+const OrderCard = ({order}: { order: Orders }) => {
     return (
-        <div className="table-responsive">
-            <table className="table table-hover table-custom table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">ID Customer</th>
-                    <th scope="col">Fecha de Pedido</th>
-                    <th scope="col">Total</th>
-                    <th scope="col">Estado</th>
-                </tr>
-                </thead>
-                <tbody>
-                {orders.map(order => (
-                    <tr key={order.id}>
-                        <td className="text-primary fw-bold">{order.id}</td>
-                        <td className={"text-success fw-bold"}>{order.customer_id}</td>
-                        <td>{order.order_date.toString()}</td>
-                        <td>{order.total_amount}</td>
-                        <td>{order.status}</td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
+        <div className="card">
+            <div className="card-body">
+                <p className="card-text"><b>ID:</b><i className={"ms-2"}>{order.id}</i></p>
+                <p className="card-text"><b>ID Cliente:</b><i className={"ms-2"}>{order.customer_id}</i></p>
+                <p className="card-text"><b>Fecha de Pedido:</b><i className={"ms-2"}>{order.order_date.toString()}</i>
+                </p>
+                <p className="card-text"><b>Total:</b><i className={"ms-2"}>{order.total_amount}</i></p>
+                <p className="card-text"><b>Estado:</b><i className={"ms-2"}>{order.status}</i></p>
+            </div>
         </div>
     );
 }
+
+const ViewOrder = (orders: [Orders]) => {
+    return (
+        <div className="container">
+            <div className="row">
+                {orders.map(order => (
+                    <div className="col-lg-4 col-md-6 mb-4" key={order.id}>
+                        <OrderCard order={order}/>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}
+export default ViewOrder;

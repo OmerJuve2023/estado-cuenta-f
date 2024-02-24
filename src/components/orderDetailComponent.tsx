@@ -1,4 +1,3 @@
-import {viewOrderDetail} from "../functions/orderDetail/viewOrderDetail.tsx";
 import {OrderDetail} from "../classes/OrderDetail.ts";
 import PaginationTable from "./PaginationTable.tsx";
 import {useUI} from "../functions/FilterCustomer.ts";
@@ -7,6 +6,7 @@ import "../CSS/ComponentStyle.css";
 import React from "react";
 import AddOrderDetailForm from "../functions/orderDetail/AddOrderDetailForm.tsx";
 import {FaUserPlus} from "react-icons/fa";
+import viewOrderDetail from "../functions/orderDetail/viewOrderDetail.tsx";
 
 export function DataViewOrderDetail() {
 

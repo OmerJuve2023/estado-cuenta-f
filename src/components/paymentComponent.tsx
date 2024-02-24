@@ -1,12 +1,12 @@
 import React from "react";
 import {Payment} from "../classes/Payment.ts";
-import {viewPayment} from "../functions/payment/viewPayment.tsx";
 import PaginationTable from "./PaginationTable.tsx";
 import {useUI} from "../functions/FilterCustomer.ts";
 import {FaUserPlus} from "react-icons/fa";
 import AddPaymentForm from "../functions/payment/AddPayment.tsx";
 import "../CSS/ComponentStyle.css";
 import {usePayments} from "../functions/payment/PaymentService.ts";
+import viewPayment from "../functions/payment/viewPayment.tsx";
 
 export function DataViewPayment() {
     const {payments, updatePayments} = usePayments();

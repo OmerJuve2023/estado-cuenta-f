@@ -1,29 +1,29 @@
 import Product from "../../classes/Product.ts";
 import "../../CSS/CardStyle.css";
-export function viewProduct(products: [Product]) {
 
+const ProductCard = ({product}: { product: Product }) => {
     return (
-        <div className="table-responsive">
-            <table className="table table-hover table-custom table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Precio</th>
-                    <th scope="col">Descripción</th>
-                </tr>
-                </thead>
-                <tbody>
-                {products.map(product => (
-                    <tr key={product.id}>
-                        <td className="text-primary fw-bold">{product.id}</td>
-                        <td>{product.name}</td>
-                        <td>{product.price}</td>
-                        <td>{product.description}</td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
+        <div className="card">
+            <div className="card-body">
+                <p className="card-text"><b>{product.name}</b></p>
+                <p className="card-text"><b>Precio:</b><i className={"ms-2"}>{product.price}</i></p>
+            </div>
         </div>
     );
 }
+
+const ViewProduct = (products: [Product]) => {
+    return (
+        <div className="container">
+            <div className="row">
+                {products.map(product => (
+                    <div className="col-lg-4 col-md-6 mb-4" key={product.id}>
+                        <ProductCard product={product}/>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}
+
+export default ViewProduct;

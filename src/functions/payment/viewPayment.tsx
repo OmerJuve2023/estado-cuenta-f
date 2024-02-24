@@ -1,36 +1,7 @@
-/*
 import {Payment} from "../../classes/Payment.ts";
 import "../../CSS/CardStyle.css";
-export function viewPayment(payments: Payment[]) {
-    return (
-        <div className={"table-responsive"}>
-            <table className="table table-hover table-custom table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Order ID</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col">Payment Date</th>
-                </tr>
-                </thead>
-                <tbody>
-                {payments.map(payment => (
-                    <tr key={payment.id}>
-                        <td className={"text-primary fw-bold"}>{payment.id}</td>
-                        <td className={"text-success fw-bold"}>{payment.order_id}</td>
-                        <td>{payment.amount}</td>
-                        <td>{payment.payment_date.toString()}</td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
-        </div>
-    );
-}*/
-import { Payment } from "../../classes/Payment.ts";
-import "../../CSS/CardStyle.css";
 
-const PaymentCard = ({ payment }: { payment: Payment }) => {
+const PaymentCard = ({payment}: { payment: Payment }) => {
     return (
         <div className="card">
             <div className="card-body">
@@ -43,16 +14,18 @@ const PaymentCard = ({ payment }: { payment: Payment }) => {
     );
 };
 
-export function viewPayment(payments: Payment[]) {
+const viewPayment = (payments: Payment[]) => {
     return (
         <div className="container">
             <div className="row">
                 {payments.map(payment => (
                     <div className="col-lg-4 col-md-6 mb-4" key={payment.id}>
-                        <PaymentCard payment={payment} />
+                        <PaymentCard payment={payment}/>
                     </div>
                 ))}
             </div>
         </div>
     );
-}
+};
+
+export default viewPayment;
