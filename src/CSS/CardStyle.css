@@ -1,0 +1,108 @@
+/*.table-custom {
+    font-size: 16px;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-custom th,
+.table-custom td {
+    padding: 8px;
+    text-align: center;
+}
+
+.table-custom thead th {
+    background-color: rgba(255, 99, 71, 0.89);
+    color: #ffffff;
+}
+
+.table-custom tbody tr:nth-of-type(odd) {
+    background-color: #f8f9fa;
+}
+
+.table-custom tbody tr:hover {
+    background-color: rgba(255, 0, 200, 0.5);
+}
+
+!* Responsiveness *!
+@media (max-width: 576px) {
+    .table-custom {
+        font-size: 14px;
+    }
+}
+
+!* Para tablets *!
+@media (min-width: 577px) and (max-width: 768px) {
+    .table-custom {
+        font-size: 14px;
+    }
+}
+
+!* Para laptops *!
+@media (min-width: 769px) and (max-width: 992px) {
+    .table-custom {
+        font-size: 16px;
+    }
+}
+
+!* Para pantallas de escritorio *!
+@media (min-width: 993px) {
+    .table-custom {
+        font-size: 18px;
+    }
+}*/
+
+/* Estilos para las tarjetas de cliente */
+
+/* Estilos para las tarjetas de cliente */
+
+.card {
+    border: none; /* Eliminar borde */
+    border-radius: 10px; /* Borde redondeado */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: box-shadow 0.3s ease; /* Transición suave al pasar el mouse */
+    background: linear-gradient(45deg, rgba(255, 87, 51, 0.7), rgba(255, 195, 0, 0.7)); /* Fondo con degradado y transparencia */
+    color: #ffffff; /* Color de texto blanco */
+    padding: 20px; /* Espaciado interno */
+}
+
+.card:hover {
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Aumentar la sombra al pasar el mouse */
+}
+
+.card-title {
+    color: #ffffff; /* Color de texto blanco */
+    font-size: 1.5rem; /* Tamaño del título */
+    font-weight: bold; /* Texto en negrita */
+    margin-bottom: 10px; /* Margen inferior */
+}
+
+.card-text {
+    color: rgba(255, 255, 255, 0.9); /* Color de texto blanco con transparencia */
+    font-size: 1rem; /* Tamaño del texto */
+    margin-bottom: 5px; /* Margen inferior */
+}
+
+.container {
+    padding: 20px 0; /* Espaciado alrededor de las tarjetas */
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 576px) {
+    .card {
+        border-radius: 12px;
+    }
+}
+
+/* Estilos para tablets */
+@media (min-width: 577px) and (max-width: 992px) {
+    .card {
+        border-radius: 10px;
+    }
+}
+
+/* Estilos para laptops y pantallas de escritorio */
+@media (min-width: 993px) {
+    .card {
+        border-radius: 8px;
+    }
+}

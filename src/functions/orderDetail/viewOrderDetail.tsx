@@ -1,9 +1,9 @@
 import {OrderDetail} from "../../classes/OrderDetail.ts";
-import "../../CSS/TableStyle.css";
+import "../../CSS/CardStyle.css";
 export function viewOrderDetail(orderDetails: [OrderDetail]) {
     return (
         <div className="table-responsive">
-            <table className="table table-hover table-custom">
+            <table className="table table-hover table-custom table-striped">
                 <thead className="thead-dark">
                 <tr>
                     <th scope="col">ID</th>

@@ -1,10 +1,10 @@
 import Product from "../../classes/Product.ts";
-import "../../CSS/TableStyle.css";
+import "../../CSS/CardStyle.css";
 export function viewProduct(products: [Product]) {
 
     return (
         <div className="table-responsive">
-            <table className="table table-hover table-custom">
+            <table className="table table-hover table-custom table-striped">
                 <thead>
                 <tr>
                     <th scope="col">ID</th>

@@ -19,7 +19,7 @@ export default function Pagination<T>({items, itemsPerPage, children}: Paginatio
     return (
         <div>
             {children(currentItems)}
-            <nav aria-label="Pagination">
+            <nav aria-label="Pagination" className={"mt-3"}>
                 <ul className="pagination justify-content-center">
                     {Array(Math.ceil(items.length / itemsPerPage))
                         .fill(0)

@@ -37,3 +37,51 @@
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); /* Ajustar el sombreado */
 }
 
+/* Responsiveness */
+/* Para dispositivos móviles */
+@media (max-width: 576px) {
+    .btn-custom {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .clientes-title {
+        font-size: 2rem;
+    }
+}
+
+/* Para tablets */
+@media (min-width: 577px) and (max-width: 768px) {
+    .btn-custom {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .clientes-title {
+        font-size: 2.5rem;
+    }
+}
+
+/* Para laptops */
+@media (min-width: 769px) and (max-width: 992px) {
+    .btn-custom {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+
+    .clientes-title {
+        font-size: 2.5rem;
+    }
+}
+
+/* Para pantallas de escritorio */
+@media (min-width: 993px) {
+    .btn-custom {
+        font-size: 18px;
+        padding: 12px 24px;
+    }
+
+    .clientes-title {
+        font-size: 3rem;
+    }
+}

@@ -15,7 +15,7 @@ export function DataViewProduct() {
     });
     return (
         <div className="container">
-            <h1 className="mb-4 mt-5 text-center clientes-title display-4 display-md-3">Gestión de Clientes</h1>
+            <h1 className="mb-4 mt-5 text-center clientes-title display-4 display-md-3">Gestión de Productos</h1>
             <div className="mb-4 row align-items-center"> {/* Contenedor para el campo de búsqueda y el botón */}
                 <div className="col-sm-8 col-md-6"> {/* Columna para el campo de búsqueda */}
                     <div className="input-group search-bar">
