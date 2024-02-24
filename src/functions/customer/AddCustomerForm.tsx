@@ -10,16 +10,17 @@ interface AddCustomerFormProps {
 }
 
 Modal.setAppElement('#root');
+
 const AddCustomerForm: React.FC<AddCustomerFormProps> = ({showModal, handleModalToggle, updateCustomerList,}) => {
+    const initialState = {
+        name: null,
+        email: null,
+        phone: null,
+        address: null,
+    }
+
     const [newCustomerData, setNewCustomerData]
-        = useState<addCustomer>(
-        {
-            name: "",
-            email: "",
-            phone: "",
-            address: "",
-        }
-    );
+        = useState<addCustomer>(initialState);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
@@ -36,6 +37,14 @@ const AddCustomerForm: React.FC<AddCustomerFormProps> = ({showModal, handleModal
             console.error("Error creating customer:", error);
         }
     };
+
+    const handleCancel = () => {
+        // Resetear el estado a los valores iniciales
+        setNewCustomerData(initialState);
+        // Cerrar el modal
+        handleModalToggle();
+    };
+
 
     return (
         <Modal
@@ -109,7 +118,7 @@ const AddCustomerForm: React.FC<AddCustomerFormProps> = ({showModal, handleModal
                         }}
                         type="button"
                         className="btn btn-secondary"
-                        onClick={handleModalToggle}
+                        onClick={handleCancel}
                         id="btn-secondary"
                     >
                         Cancelar
@@ -117,7 +126,6 @@ const AddCustomerForm: React.FC<AddCustomerFormProps> = ({showModal, handleModal
                 </div>
             </form>
         </Modal>
-
     );
 };
 

@@ -12,14 +12,16 @@ interface AddProductFormProps {
 
 Modal.setAppElement('#root');
 
+
 const AddProductForm: React.FC<AddProductFormProps> = ({showModal, handleModalToggle, updateProductList}) => {
-    const [newProductData, setNewProductData] = useState<addProduct>(
-        {
-            name: "",
-            price: 0,
-            description: ""
-        }
-    );
+
+    const initialState = {
+        name: "",
+        price: 0,
+        description: ""
+    };
+
+    const [newProductData, setNewProductData] = useState<addProduct>(initialState);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
@@ -36,6 +38,13 @@ const AddProductForm: React.FC<AddProductFormProps> = ({showModal, handleModalTo
             console.error("Error creating product:", error);
         }
     };
+
+    const handleCancel = () => {
+        // Resetear el estado a los valores iniciales
+        setNewProductData(initialState);
+        // Cerrar el modal
+        handleModalToggle();
+    }
 
     return (
         <>
@@ -80,17 +89,28 @@ const AddProductForm: React.FC<AddProductFormProps> = ({showModal, handleModalTo
                             value={newProductData.description}
                             onChange={handleInputChange}
                         />
+                    </div>
+                    <div className="d-flex justify-content-center mt-3 button-container">
                         <button
+                            style={{
+                                border: "none",
+                            }}
                             type="button"
                             className="btn btn-primary"
                             onClick={handleCreateProduct}
+                            id={"btn-primary"}
                         >
                             Add Product
                         </button>
                         <button
+                            style={{
+                                border: "none",
+                            }}
                             type="button"
-                            className="btn btn-danger"
-                            onClick={handleModalToggle}>
+                            className="btn btn-secondary"
+                            onClick={handleCancel}
+                            id={"btn-secondary"}
+                        >
                             Cancel
                         </button>
                     </div>

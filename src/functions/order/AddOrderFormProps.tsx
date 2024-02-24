@@ -12,13 +12,13 @@ interface AddOrderFormProps {
 Modal.setAppElement('#root');
 
 const AddOrderForm: React.FC<AddOrderFormProps> = ({showModal, handleModalToggle, updateOrderList}) => {
-    const [newOrderData, setNewOrderData] = useState<addOrder>(
-        {
-            customer_id: 0,
-            quantity: 0,
-            status: "pending"
-        }
-    );
+    const orderData = {
+        customer_id: 0,
+        quantity: 0,
+        status: "pending"
+    }
+
+    const [newOrderData, setNewOrderData] = useState<addOrder>(orderData);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
@@ -34,6 +34,13 @@ const AddOrderForm: React.FC<AddOrderFormProps> = ({showModal, handleModalToggle
         } catch (error) {
             console.error("Error creating order:", error);
         }
+    };
+
+    const handleCancel = () => {
+        // Resetear el estado a los valores iniciales
+        setNewOrderData(orderData);
+        // Cerrar el modal
+        handleModalToggle();
     };
 
     return (
@@ -59,12 +66,12 @@ const AddOrderForm: React.FC<AddOrderFormProps> = ({showModal, handleModalToggle
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="total_amount">Total Amount</label>
+                        <label htmlFor="quantity">Total Amount</label>
                         <input
                             type="number"
                             className="form-control"
-                            id="total_amount"
-                            name="total_amount"
+                            id="quantity"
+                            name="quamntity"
                             value={newOrderData.quantity}
                             onChange={handleInputChange}
                         />
@@ -87,7 +94,7 @@ const AddOrderForm: React.FC<AddOrderFormProps> = ({showModal, handleModalToggle
                             }}
                             type="button"
                             className="btn btn-secondary"
-                            onClick={handleModalToggle}
+                            onClick={handleCancel}
                             id="btn-secondary"
                         >
                             Cancelar

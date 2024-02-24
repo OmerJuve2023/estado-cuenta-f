@@ -5,6 +5,7 @@ import PaginationTable from "./PaginationTable.tsx";
 import {useUI} from "../functions/FilterCustomer.ts";
 import {useProducts} from "../functions/product/ProductService.ts";
 import {FaUserPlus} from "react-icons/fa";
+import AddProductForm from "../functions/product/AddProduct.tsx";
 
 export function DataViewProduct() {
     const {products, updateProducts} = useProducts();
@@ -35,7 +36,7 @@ export function DataViewProduct() {
                         <button className="btn btn-custom btn-block"
                                 onClick={handleModalToggle}> {/* Aplicamos la clase personalizada al botón y lo hacemos ocupar toda la fila */}
                             <FaUserPlus className="me-1"/>
-                            Agregar Cliente
+                            Agregar Producto
                         </button>
                     </div>
                 </div>

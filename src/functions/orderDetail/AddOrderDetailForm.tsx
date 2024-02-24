@@ -16,15 +16,15 @@ const AddOrderDetailForm: React.FC<AddOrderDetailFormProps> = ({
                                                                    handleModalToggle,
                                                                    updateOrderDetailList
                                                                }) => {
-    const [newOrderDetailData, setNewOrderDetailData] = useState<addOrderDetail>(
-        {
-            order_id: 0,
-            product_id: 0,
-            quantity: 0,
-            price: 0,
-            subtotal:0
-        }
-    );
+    const initialOrderDetailData = {
+        order_id: 0,
+        product_id: 0,
+        quantity: 0,
+        price: 0,
+        subtotal: 0
+    }
+
+    const [newOrderDetailData, setNewOrderDetailData] = useState<addOrderDetail>(initialOrderDetailData);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
@@ -40,6 +40,12 @@ const AddOrderDetailForm: React.FC<AddOrderDetailFormProps> = ({
         } catch (error) {
             console.error("Error creating order detail:", error);
         }
+    };
+    const handleCancel = () => {
+        // Resetear el estado a los valores iniciales
+        setNewOrderDetailData(initialOrderDetailData);
+        // Cerrar el modal
+        handleModalToggle();
     };
 
     return (
@@ -108,17 +114,33 @@ const AddOrderDetailForm: React.FC<AddOrderDetailFormProps> = ({
                             onChange={handleInputChange}
                         />
                     </div>
-                    <button
-                        type="button"
-                        className="btn btn-primary"
-                        onClick={handleCreateOrderDetail}
-                    >
-                        Add Order Detail
-                    </button>
+                    <div className="d-flex justify-content-center mt-3 button-container">
+                        <button
+                            style={{
+                                border: "none"
+                            }}
+                            type="button"
+                            className="btn btn-primary"
+                            onClick={handleCreateOrderDetail}
+                            id="btn-primary"
+                        >
+                            Add Order Detail
+                        </button>
+                        <button
+                            style={{
+                                border: "none"
+                            }}
+                            type="button"
+                            className="btn btn-danger"
+                            onClick={handleCancel}
+                            id={"btn-secondary"}
+                        >
+                            Cancel
+                        </button>
+                    </div>
                 </form>
             </Modal>
         </>
-
     );
 };
 export default AddOrderDetailForm;
