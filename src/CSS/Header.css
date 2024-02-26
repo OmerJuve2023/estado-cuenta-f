@@ -26,3 +26,23 @@ header {
 .navbar-toggler-icon {
     background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
+/* Estilos para dispositivos móviles */
+@media (max-width: 576px) {
+    .navbar-brand {
+        font-size: 20px; /* Reducir el tamaño de la fuente para dispositivos móviles */
+    }
+
+    .navbar-nav .nav-link {
+        padding: 10px 0; /* Ajustar el espaciado entre enlaces para dispositivos móviles */
+    }
+}
+
+/* Estilos para tablets */
+@media (min-width: 577px) and (max-width: 992px) {
+    /* Puedes agregar estilos específicos para tablets si es necesario */
+}
+
+/* Estilos para laptops y pantallas de escritorio */
+@media (min-width: 993px) {
+    /* Puedes agregar estilos específicos para laptops y pantallas de escritorio si es necesario */
+}

@@ -12,7 +12,6 @@ export const createCustomer = async (Customer: addCustomer) => {
 }
 export const listCustomers = async () => {
     const response = await api.get('/customer/list');
-    console.log(response.data)
     return response.data;
 }
 export const deleteCustomer = async (id: number) => {

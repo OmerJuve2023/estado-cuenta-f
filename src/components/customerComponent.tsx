@@ -1,12 +1,12 @@
-import React from "react";
 import Customer from "../classes/Customer.ts";
 import PaginationTable from "../components/PaginationTable.tsx";
 import AddCustomerForm from "../functions/customer/AddCustomerForm.tsx";
 import ViewCustomer from "../functions/customer/ViewCustomer.tsx";
-import {useCustomers} from "../functions/customer/CustomerService.ts";
+import {deleteCustomerS, updateCustomerS, useCustomers} from "../functions/customer/CustomerService.ts";
 import {useUI} from "../functions/FilterCustomer.ts";
 import {FaUserPlus} from 'react-icons/fa';
 import "../CSS/ComponentStyle.css";
+
 
 export function DataViewCustomer() {
     const {customers, updateCustomers} = useCustomers();
@@ -14,6 +14,18 @@ export function DataViewCustomer() {
     const filteredCustomers = customers.filter(customer => {
         return customer.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
+
+    const handleDelete = async (customerId: number) => {
+        await deleteCustomerS(customerId);
+        const updatedCustomers = await updateCustomers();
+        console.log("Lista actualizada de clientes:", updatedCustomers);
+    };
+
+    const handleEdit = async (customer: Customer) => {
+        await updateCustomerS(customer);
+        const updatedCustomers = await updateCustomers();
+        console.log("Lista actualizada de clientes:", updatedCustomers);
+    };
 
     return (
         <div className="container">
@@ -44,7 +56,9 @@ export function DataViewCustomer() {
                 </div>
             </div>
             <PaginationTable<Customer> items={filteredCustomers} itemsPerPage={10}>
-                {ViewCustomer as (items: Customer[]) => React.ReactNode}
+                {(items: Customer[]) => (
+                    <ViewCustomer customers={items} onEdit={handleEdit} onDelete={handleDelete}/>
+                )}
             </PaginationTable>
             <AddCustomerForm
                 showModal={showModal}
