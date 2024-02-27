@@ -1,7 +1,12 @@
 import {api} from "./apiService";
 import {Payment} from "../classes/Payment";
 
-export const createPayment = async (payment: Payment) => {
+export interface addPayment {
+    order_id: number;
+    amount: number;
+}
+
+export const createPayment = async (payment: addPayment) => {
     const response = await api.post('/payment/add', payment);
     return response.data;
 }

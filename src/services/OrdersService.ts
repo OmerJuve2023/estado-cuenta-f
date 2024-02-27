@@ -1,7 +1,13 @@
 import {api} from "./apiService.ts";
 import {Orders} from "../classes/Orders.ts";
 
-export const createOrder = async (order: Orders) => {
+export interface addOrder {
+    customer_id: number;
+    quantity: number;
+    status: string;
+
+}
+export const createOrder = async (order:addOrder) => {
     const response = await api.post('/order/add', order);
     return response.data;
 }

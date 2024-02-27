@@ -1,33 +1,31 @@
 import {OrderDetail} from "../../classes/OrderDetail.ts";
+import "../../CSS/CardStyle.css";
 
-export function viewOrderDetail(orderDetails: [OrderDetail]) {
+const OrderDetailCard = ({orderDetail}: { orderDetail: OrderDetail }) => {
     return (
-        <div className="container">
-            <h1 className="mb-4">Order Details</h1>
-            <table className="table table-hover">
-                <thead className="thead-dark">
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">ID Order</th>
-                    <th scope="col">ID Product</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Precio</th>
-                    <th scope="col">SubTotal</th>
-                </tr>
-                </thead>
-                <tbody>
-                {orderDetails.map(orderDetail => (
-                    <tr key={orderDetail.id}>
-                        <td className="text-primary fw-bold">{orderDetail.id}</td>
-                        <td className={"text-success fw-bold"}>{orderDetail.order_id}</td>
-                        <td className={"text-info fw-bold"}>{orderDetail.product_id}</td>
-                        <td>{orderDetail.quantity}</td>
-                        <td>{orderDetail.price}</td>
-                        <td>{orderDetail.subtotal}</td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
+        <div className="card">
+            <div className="card-body">
+                <p className="card-text"><b>ID Pedido:</b><i className={"ms-2"}>{orderDetail.order_id}</i></p>
+                <p className="card-text"><b>ID Producto:</b><i className={"ms-2"}>{orderDetail.product_id}</i></p>
+                <p className="card-text"><b>Cantidad:</b><i className={"ms-2"}>{orderDetail.quantity}</i></p>
+                <p className="card-text"><b>Precio:</b><i className={"ms-2"}>{orderDetail.price}</i></p>
+                <p className="card-text"><b>SubTotal:</b><i className={"ms-2"}>{orderDetail.subtotal}</i></p>
+            </div>
         </div>
     );
 }
+const ViewOrderDetail = (orderDetails: [OrderDetail]) => {
+    return (
+        <div className="container">
+            <div className="row">
+                {orderDetails.map(orderDetail => (
+                    <div className="col-lg-4 col-md-6 mb-4" key={orderDetail.id}>
+                        <OrderDetailCard orderDetail={orderDetail}/>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}
+
+export default ViewOrderDetail;

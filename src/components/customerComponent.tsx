@@ -1,66 +1,73 @@
-import React, {useEffect, useState} from "react";
+import {deleteCustomerS, useCustomers} from "../functions/customer/CustomerService.ts";
+import {useState} from "react";
 import Customer from "../classes/Customer.ts";
-import {listCustomers} from "../services/customerService.ts";
-import viewCustomer from "../functions/customer/viewCustomer.tsx";
+import {useUI} from "../functions/FilterCustomer.ts";
+import {FaUserPlus} from "react-icons/fa";
+import ViewCustomer from "../functions/customer/ViewCustomer.tsx";
+import AddCustomerForm from "../functions/customer/AddCustomerForm.tsx";
 import PaginationTable from "../components/PaginationTable.tsx";
-
 export function DataViewCustomer() {
-    const [customers, setCustomers] = useState<Customer[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [filteredProducts, setFilteredCustomer] = useState<Customer[]>([]);
-    const [searchTerm, setSearchTerm] = useState("");
-
-    useEffect(() => {
-        const fetchCustomers = async () => {
-            setLoading(true);
-            try {
-                const customersList = await listCustomers();
-                setCustomers(customersList)
-                setFilteredCustomer(customersList)
-            } catch (error) {
-                console.error("Error fetching customers:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchCustomers().then(r => console.log(r));
-    }, []);
-
-    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value);
-        filterCustomers(event.target.value);
+    const { customers, updateCustomers } = useCustomers();
+    const { searchTerm, handleSearch, showModal, handleModalToggle } = useUI();
+    const [editingCustomer, setEditingCustomer] = useState<Customer | null>(null); // Nuevo estado para datos del cliente en edición
+    const filteredCustomers = customers.filter(customer => {
+        return customer.name.toLowerCase().includes(searchTerm.toLowerCase());
+    });
+    // Método para manejar la edición del cliente
+    const handleEdit = (customer: Customer) => {
+        setEditingCustomer(customer);
+        handleModalToggle(); // Abre el modal de edición
     };
 
-    const filterCustomers = (term: string) => {
-        const filtered = customers.filter(customer => {
-            return customer.name.toLowerCase().includes(term.toLowerCase());
-        });
-        setFilteredCustomer(filtered);
+    const handleModalClose = () => {
+        setEditingCustomer(null); // Limpiar el cliente en edición cuando se cierre el modal
+        handleModalToggle();
     };
-    const currentCustomers = filteredProducts.slice(0, 10);
+    const handleDelete = async (customerId: number) => {
+        await deleteCustomerS(customerId);
+        const updatedCustomers = await updateCustomers();
+        alert("Cliente eliminado")
+        console.log("Lista actualizada de clientes:", updatedCustomers);
+    };
 
     return (
-        loading ? (
-            <div>Loading...</div>
-        ) : (
-
-            <div className="container">
-                <h1 className="mb-4">Clientes</h1>
-                <div className="mb-4">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Buscar por nombre"
-                        value={searchTerm}
-                        onChange={handleSearch}
-                    />
+        <div className="container">
+            <h1 className="mb-4 mt-5 text-center clientes-title display-4 display-md-3">Gestión de Clientes</h1>
+            <div className="mb-4 row align-items-center">
+                <div className="col-sm-8 col-md-6">
+                    <div className="input-group search-bar">
+                        <input
+                            style={{
+                                boxShadow: "none",
+                            }}
+                            type="search"
+                            className="form-control search-input"
+                            placeholder="Buscar por nombre"
+                            value={searchTerm}
+                            onChange={handleSearch}
+                        />
+                    </div>
                 </div>
-                <PaginationTable<Customer> items={customers} itemsPerPage={10}>
-                    {() => (
-                        viewCustomer(currentCustomers as [Customer])
-                    )}
-                </PaginationTable>
+                <div className="col-sm-4 col-md-6 mt-3 mt-sm-0">
+                    <div className="d-grid">
+                        <button className="btn btn-custom btn-block" onClick={handleModalToggle}>
+                            <FaUserPlus className="me-1"/>
+                            Agregar Cliente
+                        </button>
+                    </div>
+                </div>
             </div>
-        )
-    )
+            <PaginationTable<Customer> items={filteredCustomers} itemsPerPage={10}>
+                {(items: Customer[]) => (
+                    <ViewCustomer customers={items} onEdit={handleEdit} onDelete={handleDelete}/>
+                )}
+            </PaginationTable>
+            <AddCustomerForm
+                showModal={showModal}
+                handleModalToggle={handleModalClose}
+                updateCustomerList={updateCustomers}
+                editingCustomer={editingCustomer} // Pasar los datos del cliente en edición al modal
+            />
+        </div>
+    );
 }

@@ -1,13 +1,17 @@
 import customer from "../classes/Customer.ts";
 import {api} from "./apiService.ts";
-
-export const createCustomer = async (Customer: customer) => {
+export interface addCustomer {
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+}
+export const createCustomer = async (Customer: addCustomer) => {
     const response = await api.post('/customer/add', Customer);
     return response.data;
 }
 export const listCustomers = async () => {
     const response = await api.get('/customer/list');
-    console.log(response.data)
     return response.data;
 }
 export const deleteCustomer = async (id: number) => {

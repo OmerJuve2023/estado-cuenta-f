@@ -1,0 +1,29 @@
+.custom-page-link {
+    border: none;
+    cursor: pointer;
+    color: #000;
+    font-weight: bold;
+    padding: 0.5rem 0.75rem;
+    margin: 0 2px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    box-shadow: none;
+}
+
+.custom-page-link:hover {
+    background-color: #f0f0f0;
+}
+
+.pagination .page-item.active .custom-page-link {
+    background: linear-gradient(45deg, #FF5733, #FFC300);
+    color: #fff;
+    border-color: #FF5733;
+}
+
+.pagination .page-item:not(.active) .custom-page-link {
+    background-color: #fff;
+}
+
+.custom-page-link:focus {
+    outline: none;
+}

@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import "../CSS/PaginationStyle.css";
 
 interface PaginationProps<T> {
     items: T[];
@@ -18,20 +19,28 @@ export default function Pagination<T>({items, itemsPerPage, children}: Paginatio
     return (
         <div>
             {children(currentItems)}
-            <nav aria-label="Pagination">
+            <nav aria-label="Pagination" className={"mt-3"}>
                 <ul className="pagination justify-content-center">
                     {Array(Math.ceil(items.length / itemsPerPage))
                         .fill(0)
                         .map((_, i) => (
-                            <li key={i} className={`page-item ${currentPage === i + 1 ? "active" : ""}`}>
-                                <button onClick={() => paginate(i + 1)} className="page-link">
+                            <li
+                                key={i}
+                                className={`page-item ${
+                                    currentPage === i + 1 ? "active" : ""
+                                }`}
+                            >
+                                <button
+                                    onClick={() => paginate(i + 1)}
+                                    className="page-link custom-page-link"
+                                >
                                     {i + 1}
                                 </button>
                             </li>
                         ))}
                 </ul>
             </nav>
+
         </div>
     );
 }
-

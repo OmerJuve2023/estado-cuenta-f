@@ -1,66 +1,57 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {Orders} from "../classes/Orders.ts";
-import {listOrders} from "../services/OrdersService.ts";
-import {viewOrder} from "../functions/order/viewOrder.tsx";
 import PaginationTable from "./PaginationTable.tsx";
+import "../CSS/ComponentStyle.css";
+import {FaUserPlus} from "react-icons/fa";
+import {useUI} from "../functions/FilterCustomer.ts";
+import AddOrderForm from "../functions/order/AddOrderFormProps.tsx";
+import {useOrders} from "../functions/order/OrderService.ts";
+import viewOrder from "../functions/order/viewOrder.tsx";
 
 export function DataViewOrder() {
-    const [orders, setOrders] = useState<Orders[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [filteredOrders, setFilteredOrders] = useState<Orders[]>([]);
-    const [searchTerm, setSearchTerm] = useState("");
-
-    useEffect(() => {
-        const fetchOrders = async () => {
-            setLoading(true);
-            try {
-                const ordersList = await listOrders();
-                setOrders(ordersList)
-                setFilteredOrders(ordersList)
-            } catch (error) {
-                console.error("Error fetching orders:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchOrders().then(r => console.log(r));
-    }, []);
-
-    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value);
-        filterOrders(event.target.value);
-    };
-
-    const filterOrders = (term: string) => {
-        const filtered = orders.filter(order => {
-            return order.id.toString().toLowerCase().includes(term.toLowerCase());
-        });
-        setFilteredOrders(filtered);
-    };
-
-    const currentOrders = filteredOrders.slice(0, 10);
-
+    const {orders, updateOrders} = useOrders();
+    const {searchTerm, handleSearch, showModal, handleModalToggle} = useUI();
+    const filteredCustomers = orders.filter(orders => {
+        return orders.id.toString().toLowerCase().includes(searchTerm);
+    });
     return (
-        loading ? (
-            <div className={"container"}>Loading...</div>
-        ) : (
+        <>
             <div className="container">
-                <h1 className="mb-4">Orders</h1>
-                <div className="mb-4">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Search by name"
-                        value={searchTerm}
-                        onChange={handleSearch}
-                    />
+                <h1 className="mb-4 mt-5 text-center clientes-title display-4 display-md-3">Gestión de Ordenes</h1>
+                <div className="mb-4 row align-items-center"> {/* Contenedor para el campo de búsqueda y el botón */}
+                    <div className="col-sm-8 col-md-6"> {/* Columna para el campo de búsqueda */}
+                        <div className="input-group search-bar">
+                            <input
+                                style={{
+                                    boxShadow: "none",
+                                }}
+                                type="search"
+                                className="form-control search-input" // Aplicamos la clase personalizada al campo de búsqueda
+                                placeholder="Buscar por id o nombre"
+                                value={searchTerm}
+                                onChange={handleSearch}
+                            />
+                        </div>
+                    </div>
+                    <div className="col-sm-4 col-md-6 mt-3 mt-sm-0"> {/* Columna para el botón */}
+                        <div className="d-grid"> {/* Utilizamos una cuadrícula (grid) */}
+                            <button className="btn btn-custom btn-block"
+                                    onClick={handleModalToggle}> {/* Aplicamos la clase personalizada al botón y lo hacemos ocupar toda la fila */}
+                                <FaUserPlus className="me-1"/>
+                                Agregar Orden
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <PaginationTable<Orders> items={orders} itemsPerPage={4}>
-                    {() => (
-                        viewOrder(currentOrders as [Orders])
-                    )}
+                <PaginationTable<Orders> items={filteredCustomers} itemsPerPage={10}>
+                    {viewOrder as (items: Orders[]) => React.ReactNode}
                 </PaginationTable>
+                <AddOrderForm
+                    showModal={showModal}
+                    handleModalToggle={handleModalToggle}
+                    updateOrderList={updateOrders}
+                ></AddOrderForm>
             </div>
-        )
+        </>
     )
 }
