@@ -7,6 +7,7 @@ import ViewCustomer from "../functions/customer/ViewCustomer.tsx";
 import AddCustomerForm from "../functions/customer/AddCustomerForm.tsx";
 import PaginationTable from "../components/PaginationTable.tsx";
 export function DataViewCustomer() {
+
     const { customers, updateCustomers } = useCustomers();
     const { searchTerm, handleSearch, showModal, handleModalToggle } = useUI();
     const [editingCustomer, setEditingCustomer] = useState<Customer | null>(null); // Nuevo estado para datos del cliente en edición

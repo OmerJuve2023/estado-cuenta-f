@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {Payment} from "../../classes/Payment.ts";
-import {listPayments} from "../../services/paymentService.ts";
+import {addPayment, createPayment, deletePayment, listPayments, updatePayment} from "../../services/paymentService.ts";
 
 export function usePayments() {
     const [payments, setPayments] = useState<Payment[]>([]);
@@ -29,4 +29,29 @@ export function usePayments() {
         }
     }
     return {payments, loading, updatePayments};
+}
+
+export const addPaymentS = async (payment: addPayment) => {
+    try {
+        await createPayment(payment);
+    } catch (error) {
+        console.error("Error al agregar pago:", error);
+        throw error;
+    }
+}
+export const updatePaymentS = async (payment: Payment) => {
+    try {
+        await updatePayment(payment);
+    } catch (error) {
+        console.error("Error al actualizar pago:", error);
+        throw error;
+    }
+}
+export const deletePaymentS = async (paymentId: number) => {
+    try {
+        await deletePayment(paymentId);
+    } catch (error) {
+        console.error("Error al eliminar pago:", error);
+        throw error;
+    }
 }

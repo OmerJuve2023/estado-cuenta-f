@@ -13,16 +13,16 @@ const CustomerCard: React.FC<CustomerCardProps> = ({customer, onEdit, onDelete})
     return (
         <div className="card">
             <div className="card-body">
-                <p className="card-text"><b>{customer.name}</b></p>
-                <p className="card-text"><b>Email:</b><i className={"ms-2"}>{customer.email}</i></p>
-                <p className="card-text"><b>Teléfono</b><i className={"ms-2"}>{customer.phone}</i></p>
-                <p className="card-text"><b>Dirección</b><i className={"ms-2"}>{customer.address}</i></p>
-                <div className="d-flex justify-content-between mt-3">
-                    <button className="btn btn-sm btn-primary" onClick={() => onEdit(customer)}>
-                        <FaEdit/>
+                <p className="card-text"><b className={"text-black"}>{customer.name}</b></p>
+                <p className="card-text"><b>Email:</b><i className={"ms-2 text-black"}>{customer.email}</i></p>
+                <p className="card-text"><b>Teléfono</b><i className={"ms-2 text-black"}>{customer.phone}</i></p>
+                <p className="card-text"><b>Dirección</b><i className={"ms-2 text-black"}>{customer.address}</i></p>
+                <div className="d-flex justify-content-end align-items-center mt-3">
+                    <button className="btn transparent-btn me-2" onClick={() => onEdit(customer)}>
+                        <FaEdit/> Editar
                     </button>
-                    <button className="btn btn-sm btn-danger" onClick={() => onDelete(customer.id)}>
-                        <FaTrash/>
+                    <button className="btn transparent-btn" onClick={() => onDelete(customer.id)}>
+                        <FaTrash/> Eliminar
                     </button>
                 </div>
             </div>
