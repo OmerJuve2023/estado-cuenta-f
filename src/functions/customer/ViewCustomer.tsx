@@ -9,7 +9,7 @@ interface CustomerCardProps {
     onDelete: (customerId: number) => void;
 }
 
-const CustomerCard: React.FC<CustomerCardProps> = ({ customer, onEdit, onDelete }) => {
+const CustomerCard: React.FC<CustomerCardProps> = ({customer, onEdit, onDelete}) => {
     return (
         <div className="card">
             <div className="card-body">
@@ -19,7 +19,7 @@ const CustomerCard: React.FC<CustomerCardProps> = ({ customer, onEdit, onDelete 
                 <p className="card-text"><b>Dirección</b><i className={"ms-2"}>{customer.address}</i></p>
                 <div className="d-flex justify-content-between mt-3">
                     <button className="btn btn-sm btn-primary" onClick={() => onEdit(customer)}>
-                        <FaEdit />
+                        <FaEdit/>
                     </button>
                     <button className="btn btn-sm btn-danger" onClick={() => onDelete(customer.id)}>
                         <FaTrash/>
@@ -35,7 +35,8 @@ interface ViewCustomerProps {
     onEdit: (customer: Customer) => void;
     onDelete: (customerId: number) => void;
 }
-const ViewCustomer: React.FC<ViewCustomerProps> = ({ customers, onEdit, onDelete }) => {
+
+const ViewCustomer: React.FC<ViewCustomerProps> = ({customers, onEdit, onDelete}) => {
     return (
         <div className="container">
             <div className="row">
@@ -43,7 +44,7 @@ const ViewCustomer: React.FC<ViewCustomerProps> = ({ customers, onEdit, onDelete
                     <div className="col-lg-4 col-md-6 mb-4" key={customer.id}>
                         <CustomerCard
                             customer={customer}
-                            onEdit={onEdit}
+                            onEdit={() => onEdit(customer)}
                             onDelete={onDelete}
                         />
                     </div>

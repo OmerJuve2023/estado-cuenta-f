@@ -18,7 +18,7 @@ export function useCustomers() {
                 setLoading(false);
             }
         };
-        fetchCustomers().then(r => alert(r));
+        fetchCustomers().then(r => console.log(r));
     }, []);
 
     const updateCustomers = async () => {

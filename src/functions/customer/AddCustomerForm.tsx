@@ -1,60 +1,79 @@
-import React, {useState} from "react";
-import {addCustomer, createCustomer} from "../../services/customerService.ts";
+import React, {useState, useEffect} from "react";
 import Modal from "react-modal";
+import {addCustomerS, updateCustomerS} from "./CustomerService.ts";
 import "../../CSS/AddForm.css";
+import Customer from "../../classes/Customer.ts";
 
 interface AddCustomerFormProps {
     showModal: boolean;
     handleModalToggle: () => void;
     updateCustomerList: () => void;
+    editingCustomer: Customer | null; // Nuevo prop para pasar los datos del cliente en edición
 }
 
 Modal.setAppElement('#root');
 
-const AddCustomerForm: React.FC<AddCustomerFormProps> = ({showModal, handleModalToggle, updateCustomerList,}) => {
+const AddCustomerForm: React.FC<AddCustomerFormProps> = ({
+                                                             showModal,
+                                                             handleModalToggle,
+                                                             updateCustomerList,
+                                                             editingCustomer
+                                                         }) => {
     const initialState = {
-        name: null,
-        email: null,
-        phone: null,
-        address: null,
-    }
+        name: "",
+        email: "",
+        phone: "",
+        address: "",
+    };
 
-    const [newCustomerData, setNewCustomerData]
-        = useState<addCustomer>(initialState);
+    const [newCustomerData, setNewCustomerData] = useState<Customer>(initialState);
+    const [isEditing, setIsEditing] = useState(false); // Variable de estado para controlar si se está editando un cliente
+
+    useEffect(() => {
+        if (editingCustomer) {
+            setNewCustomerData(editingCustomer);
+            setIsEditing(true); // Establecer isEditing a true si hay un cliente en edición
+        } else {
+            setNewCustomerData(initialState);
+            setIsEditing(false); // Establecer isEditing a false si no hay un cliente en edición
+        }
+    }, [editingCustomer]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
         setNewCustomerData({...newCustomerData, [name]: value});
     };
 
-    const handleCreateCustomer = async () => {
+    const handleSave = async () => {
         try {
-            await createCustomer(newCustomerData);
+            if (isEditing) {
+                await updateCustomerS(newCustomerData);
+            } else {
+                await addCustomerS(newCustomerData);
+            }
             handleModalToggle();
             updateCustomerList();
-            alert("Cliente creado con éxito")
+            console.log("Cliente creado/editado con éxito");
         } catch (error) {
-            console.error("Error creating customer:", error);
+            console.error("Error creating/updating customer:", error);
         }
     };
 
     const handleCancel = () => {
-        // Resetear el estado a los valores iniciales
         setNewCustomerData(initialState);
-        // Cerrar el modal
         handleModalToggle();
+        setIsEditing(false); // Restablecer isEditing a false al cancelar
     };
-
 
     return (
         <Modal
             isOpen={showModal}
             onRequestClose={handleModalToggle}
-            contentLabel="Agregar Cliente"
-            className="add-modal" // Clase CSS para personalizar el modal
-            overlayClassName="modal-overlay" // Clase CSS para personalizar el overlay del modal
+            contentLabel={isEditing ? "Editar Cliente" : "Agregar Cliente"} // Usar isEditing para determinar el contenido del label
+            className="add-modal"
+            overlayClassName="modal-overlay"
         >
-            <h2 className="modal-title text-center">Agregar Cliente</h2>
+            <h2 className="modal-title text-center">{isEditing ? "Editar Cliente" : "Agregar Cliente"}</h2>
             <form>
                 <div className="form-group">
                     <label htmlFor="name">Nombre</label>
@@ -107,10 +126,10 @@ const AddCustomerForm: React.FC<AddCustomerFormProps> = ({showModal, handleModal
                         }}
                         type="button"
                         className="btn btn-primary"
-                        onClick={handleCreateCustomer}
+                        onClick={handleSave}
                         id="btn-primary"
                     >
-                        Crear Cliente
+                        {isEditing ? "Guardar Cambios" : "Crear Cliente"}
                     </button>
                     <button
                         style={{
