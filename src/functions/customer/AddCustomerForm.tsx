@@ -147,5 +147,4 @@ const AddCustomerForm: React.FC<AddCustomerFormProps> = ({
         </Modal>
     );
 };
-
 export default AddCustomerForm;

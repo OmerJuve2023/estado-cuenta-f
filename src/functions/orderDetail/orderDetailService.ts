@@ -1,6 +1,12 @@
 import {useEffect, useState} from "react";
 import {OrderDetail} from "../../classes/OrderDetail.ts";
-import {listOrderDetails} from "../../services/OrderDetails.ts";
+import {
+    addOrderDetail,
+    createOrderDetail,
+    deleteOrderDetail,
+    listOrderDetails,
+    updateOrderDetail
+} from "../../services/OrderDetails.ts";
 
 export function useOrderDetail() {
     const [orderDetail, setOrderDetail] = useState<OrderDetail[]>([]);
@@ -30,4 +36,29 @@ export function useOrderDetail() {
         }
     }
     return {orderDetail, loading, updateOrderDetail};
+}
+
+export const addOrderDetailS = async (orderDetail: addOrderDetail) => {
+    try {
+        await createOrderDetail(orderDetail);
+    } catch (error) {
+        console.error("Error al agregar detalle de pedido:", error);
+        throw error;
+    }
+}
+export const updateOrderDetailS = async (orderDetail: OrderDetail) => {
+    try {
+        await updateOrderDetail(orderDetail);
+    } catch (error) {
+        console.error("Error al actualizar detalle de pedido:", error);
+        throw error;
+    }
+}
+export const deleteOrderDetailS = async (orderDetailId: number) => {
+    try {
+        await deleteOrderDetail(orderDetailId);
+    } catch (error) {
+        console.error("Error al eliminar detalle de pedido:", error);
+        throw error;
+    }
 }

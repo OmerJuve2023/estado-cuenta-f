@@ -1,5 +1,4 @@
 .card {
-    border: none; /* Eliminar borde */
     border-radius: 10px; /* Borde redondeado */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
     transition: box-shadow 0.3s ease; /* Transición suave al pasar el mouse */
@@ -28,6 +27,20 @@
 .container {
     padding: 20px 0; /* Espaciado alrededor de las tarjetas */
 }
+
+.transparent-btn {
+    background-color: transparent;
+    color: rgba(255, 255, 255, 0.7);
+    border-color: transparent;
+    margin-right: 0.5rem; /* Espaciado entre los botones */
+    padding: 0.375rem 0.75rem; /* Espaciado interno de los botones */
+}
+
+.transparent-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+}
+
 
 /* Estilos para dispositivos móviles */
 @media (max-width: 576px) {

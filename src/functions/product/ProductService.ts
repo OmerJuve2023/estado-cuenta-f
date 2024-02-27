@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import Product from "../../classes/Product.ts";
-import {listProducts} from "../../services/productService.ts";
+import {addProduct, createProduct, deleteProduct, listProducts, updateProduct} from "../../services/productService.ts";
 
 export function useProducts() {
     const [products, setProducts] = useState<Product[]>([]);
@@ -29,4 +29,29 @@ export function useProducts() {
         }
     }
     return {products, loading, updateProducts};
+}
+
+export const addProductS = async (product: addProduct) => {
+    try {
+        await createProduct(product);
+    } catch (error) {
+        console.error("Error al agregar producto:", error);
+        throw error;
+    }
+}
+export const updateProductS = async (product: Product) => {
+    try {
+        await updateProduct(product);
+    } catch (error) {
+        console.error("Error al actualizar producto:", error);
+        throw error;
+    }
+}
+export const deleteProductS = async (productId: number) => {
+    try {
+        await deleteProduct(productId);
+    } catch (error) {
+        console.error("Error al eliminar producto:", error);
+        throw error;
+    }
 }
