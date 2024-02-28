@@ -1,19 +1,25 @@
+import React, {useEffect, useState} from "react";
 import Modal from "react-modal";
+import {addProductS, updateProductS} from "./ProductService.ts";
 import "../../CSS/AddForm.css";
-import React, {useState} from "react";
-import {addProduct, createProduct} from "../../services/productService.ts";
-
+import Product from "../../classes/Product.ts";
 
 interface AddProductFormProps {
     showModal: boolean;
     handleModalToggle: () => void;
     updateProductList: () => void;
+    editingProduct: Product | null;
 }
 
 Modal.setAppElement('#root');
 
 
-const AddProductForm: React.FC<AddProductFormProps> = ({showModal, handleModalToggle, updateProductList}) => {
+const AddProductForm: React.FC<AddProductFormProps> = ({
+                                                           showModal,
+                                                           handleModalToggle,
+                                                           updateProductList,
+                                                           editingProduct
+                                                       }) => {
 
     const initialState = {
         name: "",
@@ -21,23 +27,39 @@ const AddProductForm: React.FC<AddProductFormProps> = ({showModal, handleModalTo
         description: ""
     };
 
-    const [newProductData, setNewProductData] = useState<addProduct>(initialState);
+    const [newProductData, setNewProductData] = useState<Product>(initialState);
+    const [isEditing, setIsEditing] = useState(false);
+
+    useEffect(() => {
+        if (editingProduct) {
+            setNewProductData(editingProduct);
+            setIsEditing(true);
+        } else {
+            setNewProductData(initialState);
+            setIsEditing(false);
+        }
+    }, [editingProduct]);
+
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
         setNewProductData({...newProductData, [name]: value});
     };
 
-    const handleCreateProduct = async () => {
+    const handleSave = async () => {
         try {
-            await createProduct(newProductData);
+            if (isEditing) {
+                await updateProductS(newProductData);
+            } else {
+                await addProductS(newProductData);
+            }
             handleModalToggle();
             updateProductList();
-            alert("Product created successfully")
+            console.log("Product created/edited successfully");
         } catch (error) {
-            console.error("Error creating product:", error);
+            console.error("Error creating/editing product:", error);
         }
-    };
+    }
 
     const handleCancel = () => {
         // Resetear el estado a los valores iniciales
@@ -51,11 +73,13 @@ const AddProductForm: React.FC<AddProductFormProps> = ({showModal, handleModalTo
             <Modal
                 isOpen={showModal}
                 onRequestClose={handleModalToggle}
-                contentLabel="Add Product"
+                contentLabel={isEditing ? "Edit Product" : "Add Product"}
                 className="add-modal"
                 overlayClassName="modal-overlay"
             >
-                <h2 className="modal-title text-center">Add Product</h2>
+                <h2 className="modal-title text-center">
+                    {isEditing ? "Edit Product" : "Add Product"}
+                </h2>
                 <form>
                     <div className="form-group">
                         <label htmlFor="name">Product Name</label>
@@ -97,10 +121,10 @@ const AddProductForm: React.FC<AddProductFormProps> = ({showModal, handleModalTo
                             }}
                             type="button"
                             className="btn btn-primary"
-                            onClick={handleCreateProduct}
+                            onClick={handleSave}
                             id={"btn-primary"}
                         >
-                            Add Product
+                            {isEditing ? "Edit" : "Add"}
                         </button>
                         <button
                             style={{
