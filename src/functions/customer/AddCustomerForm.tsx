@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Modal from "react-modal";
 import {addCustomerS, updateCustomerS} from "./CustomerService.ts";
 import "../../CSS/AddForm.css";

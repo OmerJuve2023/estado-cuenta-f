@@ -1,20 +1,36 @@
 import {OrderDetail} from "../classes/OrderDetail.ts";
 import PaginationTable from "./PaginationTable.tsx";
 import {useUI} from "../functions/FilterCustomer.ts";
-import {useOrderDetail} from "../functions/orderDetail/orderDetailService.ts";
+import {deleteOrderDetailS, useOrderDetail} from "../functions/orderDetail/orderDetailService.ts";
 import "../CSS/ComponentStyle.css";
-import React from "react";
+import {useState} from "react";
 import AddOrderDetailForm from "../functions/orderDetail/AddOrderDetailForm.tsx";
 import {FaUserPlus} from "react-icons/fa";
-import viewOrderDetail from "../functions/orderDetail/viewOrderDetail.tsx";
+import ViewOrderDetail from "../functions/orderDetail/viewOrderDetail.tsx";
 
 export function DataViewOrderDetail() {
 
     const {orderDetail, updateOrderDetail} = useOrderDetail();
     const {searchTerm, handleSearch, showModal, handleModalToggle} = useUI();
+    const [editingOrderDetail, setEditingOrderDetail] = useState<OrderDetail | null>(null);
     const filteredOrderDetails = orderDetail.filter(orderDetail => {
         return orderDetail.id.toString().toLowerCase().includes(searchTerm);
     });
+
+    const handleEdit = (orderDetail: OrderDetail) => {
+        setEditingOrderDetail(orderDetail);
+        handleModalToggle();
+    }
+    const handleModalClose = () => {
+        setEditingOrderDetail(null);
+        handleModalToggle();
+    }
+    const handleDelete = async (orderDetailId: number) => {
+        await deleteOrderDetailS(orderDetailId);
+        await updateOrderDetail();
+        alert("Orden eliminada");
+    }
+
 
     return (
         <div className="container">
@@ -45,12 +61,15 @@ export function DataViewOrderDetail() {
                 </div>
             </div>
             <PaginationTable<OrderDetail> items={filteredOrderDetails} itemsPerPage={4}>
-                {viewOrderDetail as (items: OrderDetail[]) => React.ReactNode}
+                {(items: OrderDetail[]) => (
+                    <ViewOrderDetail orderDetails={items} onEdit={handleEdit} onDelete={handleDelete}/>
+                )}
             </PaginationTable>
             <AddOrderDetailForm
                 showModal={showModal}
-                handleModalToggle={handleModalToggle}
+                handleModalToggle={handleModalClose}
                 updateOrderDetailList={updateOrderDetail}
+                editingOrderDetail={editingOrderDetail}
             />
         </div>
     )
