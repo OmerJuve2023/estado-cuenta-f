@@ -1,7 +1,6 @@
 import {useEffect, useState} from "react";
 import {OrderDetail} from "../../classes/OrderDetail.ts";
 import {
-    addOrderDetail,
     createOrderDetail,
     deleteOrderDetail,
     listOrderDetails,
@@ -38,7 +37,7 @@ export function useOrderDetail() {
     return {orderDetail, loading, updateOrderDetail};
 }
 
-export const addOrderDetailS = async (orderDetail: addOrderDetail) => {
+export const addOrderDetailS = async (orderDetail: OrderDetail) => {
     try {
         await createOrderDetail(orderDetail);
     } catch (error) {

@@ -6,10 +6,11 @@ import {FaUserPlus} from "react-icons/fa";
 import ViewCustomer from "../functions/customer/ViewCustomer.tsx";
 import AddCustomerForm from "../functions/customer/AddCustomerForm.tsx";
 import PaginationTable from "../components/PaginationTable.tsx";
+
 export function DataViewCustomer() {
 
-    const { customers, updateCustomers } = useCustomers();
-    const { searchTerm, handleSearch, showModal, handleModalToggle } = useUI();
+    const {customers, updateCustomers} = useCustomers();
+    const {searchTerm, handleSearch, showModal, handleModalToggle} = useUI();
     const [editingCustomer, setEditingCustomer] = useState<Customer | null>(null); // Nuevo estado para datos del cliente en edición
     const filteredCustomers = customers.filter(customer => {
         return customer.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -26,9 +27,8 @@ export function DataViewCustomer() {
     };
     const handleDelete = async (customerId: number) => {
         await deleteCustomerS(customerId);
-        const updatedCustomers = await updateCustomers();
+        await updateCustomers();
         alert("Cliente eliminado")
-        console.log("Lista actualizada de clientes:", updatedCustomers);
     };
 
     return (

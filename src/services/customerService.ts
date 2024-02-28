@@ -1,5 +1,6 @@
 import customer from "../classes/Customer.ts";
 import {api} from "./apiService.ts";
+
 export interface addCustomer {
     name: string;
     email: string;

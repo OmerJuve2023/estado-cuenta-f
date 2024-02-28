@@ -1,12 +1,16 @@
+import React, {useEffect, useState} from "react";
 import Modal from "react-modal";
 import "../../CSS/AddForm.css";
-import React, {useState} from "react";
-import {addOrderDetail, createOrderDetail} from "../../services/OrderDetails.ts";
+import {createOrderDetail} from "../../services/OrderDetails.ts";
+import {OrderDetail} from "../../classes/OrderDetail.ts";
+import {updateOrderS} from "../order/OrderService.ts";
+import {addOrderDetailS, updateOrderDetailS} from "./orderDetailService.ts";
 
 interface AddOrderDetailFormProps {
     showModal: boolean;
     handleModalToggle: () => void;
     updateOrderDetailList: () => void;
+    editingOrderDetail: OrderDetail | null;
 }
 
 Modal.setAppElement('#root');
@@ -14,9 +18,11 @@ Modal.setAppElement('#root');
 const AddOrderDetailForm: React.FC<AddOrderDetailFormProps> = ({
                                                                    showModal,
                                                                    handleModalToggle,
-                                                                   updateOrderDetailList
+                                                                   updateOrderDetailList,
+                                                                   editingOrderDetail
                                                                }) => {
     const initialOrderDetailData = {
+        id: 0,
         order_id: 0,
         product_id: 0,
         quantity: 0,
@@ -24,7 +30,18 @@ const AddOrderDetailForm: React.FC<AddOrderDetailFormProps> = ({
         subtotal: 0
     }
 
-    const [newOrderDetailData, setNewOrderDetailData] = useState<addOrderDetail>(initialOrderDetailData);
+    const [newOrderDetailData, setNewOrderDetailData] = useState<OrderDetail>(initialOrderDetailData);
+    const [isEditing, setIsEditing] = useState(false);
+
+    useEffect(() => {
+        if (editingOrderDetail) {
+            setNewOrderDetailData(editingOrderDetail);
+            setIsEditing(true);
+        } else {
+            setNewOrderDetailData(initialOrderDetailData);
+            setIsEditing(false);
+        }
+    }, [editingOrderDetail]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
@@ -33,19 +50,22 @@ const AddOrderDetailForm: React.FC<AddOrderDetailFormProps> = ({
 
     const handleCreateOrderDetail = async () => {
         try {
-            await createOrderDetail(newOrderDetailData);
+            if (isEditing) {
+                await updateOrderDetailS(newOrderDetailData);
+            } else {
+                await addOrderDetailS(newOrderDetailData);
+            }
             handleModalToggle();
             updateOrderDetailList();
-            alert("Order Detail created successfully")
+            console.log("Order Detail created/edited successfully");
         } catch (error) {
-            console.error("Error creating order detail:", error);
+            console.error("Error creating/editing order detail:", error);
         }
     };
     const handleCancel = () => {
-        // Resetear el estado a los valores iniciales
         setNewOrderDetailData(initialOrderDetailData);
-        // Cerrar el modal
         handleModalToggle();
+        setIsEditing(false);
     };
 
     return (
@@ -53,66 +73,59 @@ const AddOrderDetailForm: React.FC<AddOrderDetailFormProps> = ({
             <Modal
                 isOpen={showModal}
                 onRequestClose={handleModalToggle}
-                contentLabel="Add Order Detail"
+                contentLabel={isEditing ? "Edit Order Detail" : "Add Order Detail"}
                 className="add-modal"
                 overlayClassName="modal-overlay"
             >
-                <h2 className="modal-title text-center">Add Order Detail</h2>
+                <h2 className="modal-title text-center">
+                    {isEditing ? "Edit Order Detail" : "Add Order Detail"}
+                </h2>
                 <form>
-                    <div className="form-group">
-                        <label htmlFor="order_id">Order ID</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            id="order_id"
-                            name="order_id"
-                            value={newOrderDetailData.order_id}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="product_id">Product ID</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            id="product_id"
-                            name="product_id"
-                            value={newOrderDetailData.product_id}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="quantity">Quantity</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            id="quantity"
-                            name="quantity"
-                            value={newOrderDetailData.quantity}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="price">Price</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            id="price"
-                            name="price"
-                            value={newOrderDetailData.price}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="subtotal">Subtotal</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            id="subtotal"
-                            name="subtotal"
-                            value={newOrderDetailData.subtotal}
-                            onChange={handleInputChange}
-                        />
+                    <div>
+                        <div className="form-group">
+                            <label htmlFor="order_id">Order ID</label>
+                            <input
+                                type="number"
+                                className="form-control"
+                                id="order_id"
+                                name="order_id"
+                                value={newOrderDetailData.order_id}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="product_id">Product ID</label>
+                            <input
+                                type="number"
+                                className="form-control"
+                                id="product_id"
+                                name="product_id"
+                                value={newOrderDetailData.product_id}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="quantity">Quantity</label>
+                            <input
+                                type="number"
+                                className="form-control"
+                                id="quantity"
+                                name="quantity"
+                                value={newOrderDetailData.quantity}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="price">Price</label>
+                            <input
+                                type="number"
+                                className="form-control"
+                                id="price"
+                                name="price"
+                                value={newOrderDetailData.price}
+                                onChange={handleInputChange}
+                            />
+                        </div>
                     </div>
                     <div className="d-flex justify-content-center mt-3 button-container">
                         <button
@@ -124,7 +137,7 @@ const AddOrderDetailForm: React.FC<AddOrderDetailFormProps> = ({
                             onClick={handleCreateOrderDetail}
                             id="btn-primary"
                         >
-                            Add Order Detail
+                            {isEditing ? "Save Changes" : "Create Order Detail"}
                         </button>
                         <button
                             style={{
@@ -139,6 +152,7 @@ const AddOrderDetailForm: React.FC<AddOrderDetailFormProps> = ({
                         </button>
                     </div>
                 </form>
+
             </Modal>
         </>
     );
