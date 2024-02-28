@@ -1,18 +1,35 @@
-import React from "react";
+import {useState} from "react";
 import Product from "../classes/Product.ts";
 import PaginationTable from "./PaginationTable.tsx";
 import {useUI} from "../functions/FilterCustomer.ts";
-import {useProducts} from "../functions/product/ProductService.ts";
+import {deleteProductS, useProducts} from "../functions/product/ProductService.ts";
 import {FaUserPlus} from "react-icons/fa";
 import AddProductForm from "../functions/product/AddProduct.tsx";
-import viewProduct from "../functions/product/ViewProduct.tsx";
+import ViewProduct from "../functions/product/ViewProduct.tsx";
 
 export function DataViewProduct() {
     const {products, updateProducts} = useProducts();
     const {searchTerm, handleSearch, showModal, handleModalToggle} = useUI();
+    const [editingProduct, setEditingProduct] = useState<Product | null>(null);
     const filteredProducts = products.filter(customer => {
         return customer.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
+
+    const handleEdit = (product: Product) => {
+        setEditingProduct(product);
+        handleModalToggle();
+    }
+    const handleModalClose = () => {
+        setEditingProduct(null);
+        handleModalToggle();
+    }
+    const handleDelete = async (productId: number) => {
+        await deleteProductS(productId);
+        const updatedProducts = await updateProducts();
+        alert("Producto eliminado")
+        console.log("Lista actualizada de productos:", updatedProducts);
+    }
+
     return (
         <div className="container">
             <h1 className="mb-4 mt-5 text-center clientes-title display-4 display-md-3">Gestión de Productos</h1>
@@ -42,12 +59,15 @@ export function DataViewProduct() {
                 </div>
             </div>
             <PaginationTable<Product> items={filteredProducts} itemsPerPage={7}>
-                {viewProduct as (items: Product[]) => React.ReactNode}
+                {(product: Product[]) => (
+                    <ViewProduct products={product} onEdit={handleEdit} onDelete={handleDelete}/>
+                )}
             </PaginationTable>
             <AddProductForm
                 showModal={showModal}
-                handleModalToggle={handleModalToggle}
+                handleModalToggle={handleModalClose}
                 updateProductList={updateProducts}
+                editingProduct={editingProduct}
             />
         </div>
     )

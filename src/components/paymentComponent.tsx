@@ -1,19 +1,36 @@
-import React from "react";
+import {useState} from "react";
 import {Payment} from "../classes/Payment.ts";
 import PaginationTable from "./PaginationTable.tsx";
 import {useUI} from "../functions/FilterCustomer.ts";
 import {FaUserPlus} from "react-icons/fa";
 import AddPaymentForm from "../functions/payment/AddPayment.tsx";
 import "../CSS/ComponentStyle.css";
-import {usePayments} from "../functions/payment/PaymentService.ts";
-import viewPayment from "../functions/payment/viewPayment.tsx";
+import {deletePaymentS, usePayments} from "../functions/payment/PaymentService.ts";
+import ViewPayment from "../functions/payment/viewPayment.tsx";
 
 export function DataViewPayment() {
     const {payments, updatePayments} = usePayments();
     const {searchTerm, handleSearch, showModal, handleModalToggle} = useUI();
-    const filteredPayments = payments.filter(customer => {
-        return customer.id.toString().includes(searchTerm.toLowerCase());
+    const [editingPayment, setEditingPayment] = useState<Payment | null>(null);
+    const filteredPayments = payments.filter(payment => {
+        return payment.id.toString().includes(searchTerm.toLowerCase());
     });
+
+    const handleEdit = (payment: Payment) => {
+        setEditingPayment(payment);
+        handleModalToggle();
+    }
+    const handleModalClose = () => {
+        setEditingPayment(null);
+        handleModalToggle();
+    }
+    const handleDelete = async (paymentId: number) => {
+        await deletePaymentS(paymentId);
+        const updatedPayments = await updatePayments();
+        alert("Payment deleted")
+        console.log("Updated payment list:", updatedPayments);
+    }
+
     return (
         <div className="container">
             <h1 className="mb-4 mt-5 text-center clientes-title display-4 display-md-3">Gestión de Pagos</h1>
@@ -42,13 +59,16 @@ export function DataViewPayment() {
                     </div>
                 </div>
             </div>
-            <PaginationTable<Payment> items={filteredPayments} itemsPerPage={4}>
-                {viewPayment as (items: Payment[]) => React.ReactNode}
+            <PaginationTable<Payment> items={filteredPayments} itemsPerPage={10}>
+                {(items: Payment[]) => (
+                    <ViewPayment payments={items} onEdit={handleEdit} onDelete={handleDelete}/>
+                )}
             </PaginationTable>
             <AddPaymentForm
                 showModal={showModal}
-                handleModalToggle={handleModalToggle}
+                handleModalToggle={handleModalClose}
                 updatePaymentList={updatePayments}
+                editingPayment={editingPayment}
             />
         </div>
     )
