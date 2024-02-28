@@ -40,10 +40,15 @@ const AddPaymentForm: React.FC<AddPaymentFromProps> = ({
         }
     }, [editingPayment]);
 
-
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
-        setNewPaymentData({...newPaymentData, [name]: value});
+        if (name === "payment_date") {
+            const parts = value.split(/[-T:]/);
+            const formattedDate = `${parts[0]}-${parts[1]}-${parts[2]}T${parts[3]}:${parts[4]}`;
+            setNewPaymentData({...newPaymentData, [name]: formattedDate});
+        } else {
+            setNewPaymentData({...newPaymentData, [name]: value});
+        }
     };
 
     const hanleSave = async () => {
@@ -91,13 +96,27 @@ const AddPaymentForm: React.FC<AddPaymentFromProps> = ({
                             onChange={handleInputChange}
                         />
                     </div>
+                    {isEditing && (
+                        <div className="form-group">
+                            <label htmlFor="payment_date">Payment Date</label>
+                            <input
+                                type="datetime-local"
+                                className="form-control"
+                                id="payment_date"
+                                name="payment_date"
+                                value={newPaymentData.payment_date}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                    )
+                    }
                     <div className="form-group">
-                        <label htmlFor="payment_date">Payment Date</label>
+                        <label htmlFor="amount">Amount</label>
                         <input
-                            type="text"
+                            type="number"
                             className="form-control"
-                            id="payment_date"
-                            name="payment_date"
+                            id="amount"
+                            name="amount"
                             value={newPaymentData.amount}
                             onChange={handleInputChange}
                         />
