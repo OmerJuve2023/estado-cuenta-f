@@ -56,7 +56,6 @@ const AddOrderForm: React.FC<AddOrderFormProps> = ({
     const handleSave = async () => {
         try {
             if (isEditing) {
-                // @ts-ignore
                 await updateOrderS(newOrderData);
             } else {
                 await addOrderS(newOrderData);

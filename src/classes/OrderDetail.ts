@@ -5,4 +5,6 @@ export interface OrderDetail {
     quantity: number;
     price: number;
     subtotal: number;
+    customer: string;
+    product: string;
 }

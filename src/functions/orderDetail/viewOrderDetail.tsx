@@ -13,8 +13,9 @@ const OrderDetailCard: React.FC<OrderDetailCardProps> = ({orderDetail, onEdit, o
     return (
         <div className="card">
             <div className="card-body">
-                <p className="card-text"><b>ID Pedido:</b><i className={"ms-2"}>{orderDetail.order_id}</i></p>
-                <p className="card-text"><b>ID Producto:</b><i className={"ms-2"}>{orderDetail.product_id}</i></p>
+                <p className="card-text"><b>ID:</b><i className={"ms-2"}>{orderDetail.id}</i></p>
+                <p className="card-text"><b>Cliente:</b><i className={"ms-2"}>{orderDetail.customer}</i></p>
+                <p className="card-text"><b>Producto:</b><i className={"ms-2"}>{orderDetail.product}</i></p>
                 <p className="card-text"><b>Cantidad:</b><i className={"ms-2"}>{orderDetail.quantity}</i></p>
                 <p className="card-text"><b>Precio:</b><i className={"ms-2"}>{orderDetail.price}</i></p>
                 <p className="card-text"><b>SubTotal:</b><i className={"ms-2"}>{orderDetail.subtotal}</i></p>

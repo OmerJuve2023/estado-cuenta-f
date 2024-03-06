@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Modal from "react-modal";
 import "../../CSS/AddForm.css";
-import {createOrderDetail} from "../../services/OrderDetails.ts";
 import {OrderDetail} from "../../classes/OrderDetail.ts";
-import {updateOrderS} from "../order/OrderService.ts";
 import {addOrderDetailS, updateOrderDetailS} from "./orderDetailService.ts";
 
 interface AddOrderDetailFormProps {
@@ -34,6 +32,7 @@ const AddOrderDetailForm: React.FC<AddOrderDetailFormProps> = ({
     const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
+
         if (editingOrderDetail) {
             setNewOrderDetailData(editingOrderDetail);
             setIsEditing(true);

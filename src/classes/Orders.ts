@@ -4,4 +4,5 @@ export interface Orders {
     order_date: Date;
     total_amount: number;
     status: string;
+    name: string;
 }
