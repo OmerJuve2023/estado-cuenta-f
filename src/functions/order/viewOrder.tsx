@@ -15,7 +15,7 @@ const OrderCard: React.FC<OrderCardProps> = ({order, onEdit, onDelete}) => {
         <div className="card">
             <div className="card-body">
                 <p className="card-text"><b>ID:</b><i className={"ms-2"}>{order.id}</i></p>
-                <p className="card-text"><b>ID Cliente:</b><i className={"ms-2"}>{order.customer_id}</i></p>
+                <p className="card-text"><b>Cliente:</b><i className={"ms-2"}>{order.name}</i></p>
                 <p className="card-text"><b>Fecha de Pedido:</b><i className={"ms-2"}>{order.order_date.toString()}</i>
                 </p>
                 <p className="card-text"><b>Total:</b><i className={"ms-2"}>{order.total_amount}</i></p>
