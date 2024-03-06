@@ -14,12 +14,20 @@ const OrderCard: React.FC<OrderCardProps> = ({order, onEdit, onDelete}) => {
     return (
         <div className="card">
             <div className="card-body">
-                <p className="card-text"><b>ID:</b><i className={"ms-2"}>{order.id}</i></p>
-                <p className="card-text"><b>Cliente:</b><i className={"ms-2"}>{order.name}</i></p>
-                <p className="card-text"><b>Fecha de Pedido:</b><i className={"ms-2"}>{order.order_date.toString()}</i>
+                <p className="card-text fw-medium"><b>Cliente:</b><span className={"ms-2"}
+                                                                        style={{color: "blueviolet"}}>
+                    {order.name}</span></p>
+                <p className="card-text fw-medium"><b>N° orden:</b><span className={"ms-2"}
+                                                                         style={{color: "blueviolet"}}>
+                    {order.id}</span></p>
+                <p className="card-text fw-medium"><b>Fecha de Pedido:</b><span
+                    className={"ms-2"} style={{color: "blueviolet"}}>
+                    {order.order_date.toString()}</span>
                 </p>
-                <p className="card-text"><b>Total:</b><i className={"ms-2"}>{order.total_amount}</i></p>
-                <p className="card-text"><b>Estado:</b><i className={"ms-2"}>{order.status}</i></p>
+                <p className="card-text fw-medium"><b>Total:</b><span className={"ms-2"} style={{color: "blueviolet"}}>
+                   S/. {order.total_amount}</span></p>
+                <p className="card-text fw-medium"><b>Estado:</b><span className={"ms-2"} style={{color: "blueviolet"}}>
+                    {order.status}</span></p>
                 <div className="d-flex justify-content-end align-items-center mt-3">
                     <button className="btn transparent-btn me-2" onClick={() => onEdit(order)}>
                         <FaEdit/> Editar

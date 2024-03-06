@@ -39,6 +39,7 @@ export const addOrderS = async (order: addOrder) => {
         throw error;
     }
 }
+
 export const updateOrderS = async (order: Orders) => {
     try {
         await updateOrder(order);

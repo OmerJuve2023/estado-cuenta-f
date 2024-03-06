@@ -19,7 +19,7 @@
 }
 
 .card-text {
-    color: rgba(255, 255, 255, 0.9); /* Color de texto blanco con transparencia */
+    color: rgba(255, 0, 200, 0.85); /* Color de texto blanco con transparencia */
     font-size: 1rem; /* Tamaño del texto */
     margin-bottom: 5px; /* Margen inferior */
 }

@@ -3,4 +3,5 @@ export interface Payment {
     order_id: number;
     amount: number;
     payment_date: Date;
+    customer: string;
 }
