@@ -14,7 +14,7 @@ export function DataViewOrderDetail() {
     const {searchTerm, handleSearch, showModal, handleModalToggle} = useUI();
     const [editingOrderDetail, setEditingOrderDetail] = useState<OrderDetail | null>(null);
     const filteredOrderDetails = orderDetail.filter(orderDetail => {
-        return orderDetail.id.toString().toLowerCase().includes(searchTerm);
+        return orderDetail.customer.toString().toLowerCase().includes(searchTerm);
     });
 
     const handleEdit = (orderDetail: OrderDetail) => {

@@ -29,7 +29,7 @@ export const deleteOrder = async (id: number) => {
     const response = await api.delete(`/order/delete/${id}`);
     return response.data;
 }
-export const updateOrder = async (order: updateOrder) => {
+export const updateOrder = async (order: updateOrders) => {
     const response = await api.put(`/order/update/${order.id}`, order);
     return response.data;
 }

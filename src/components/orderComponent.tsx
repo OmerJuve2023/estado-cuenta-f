@@ -13,7 +13,7 @@ export function DataViewOrder() {
     const {searchTerm, handleSearch, showModal, handleModalToggle} = useUI();
     const [editingOrder, setEditingOrder] = useState<Orders | null>(null); // Nuevo estado para datos del cliente en edición
     const filteredOrders = orders.filter(orders => {
-        return orders.id.toString().toLowerCase().includes(searchTerm);
+        return orders.name.toString().toLowerCase().includes(searchTerm);
     });
     const handleEdit = (order: Orders) => {
         setEditingOrder(order);
