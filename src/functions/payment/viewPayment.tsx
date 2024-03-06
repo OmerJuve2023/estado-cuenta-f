@@ -12,7 +12,7 @@ const PaymentCard: React.FC<PaymentCardProps> = ({payment, onEdit, onDelete}) =>
     return (
         <div className="card">
             <div className="card-body">
-                <h5 className="card-title">Payment ID: {payment.id}</h5>
+                <h5 className="card-title">{payment.customer}</h5>
                 <p className="card-text">Order ID: {payment.order_id}</p>
                 <p className="card-text">Amount: {payment.amount}</p>
                 <p className="card-text">Payment Date: {payment.payment_date.toString()}</p>
