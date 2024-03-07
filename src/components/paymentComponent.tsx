@@ -13,7 +13,7 @@ export function DataViewPayment() {
     const {searchTerm, handleSearch, showModal, handleModalToggle} = useUI();
     const [editingPayment, setEditingPayment] = useState<Payment | null>(null);
     const filteredPayments = payments.filter(payment => {
-        return payment.id.toString().includes(searchTerm.toLowerCase());
+        return payment.customer.toLowerCase().includes(searchTerm);
     });
 
     const handleEdit = (payment: Payment) => {

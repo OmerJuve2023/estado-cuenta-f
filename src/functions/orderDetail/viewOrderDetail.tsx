@@ -13,12 +13,25 @@ const OrderDetailCard: React.FC<OrderDetailCardProps> = ({orderDetail, onEdit, o
     return (
         <div className="card">
             <div className="card-body">
-                <p className="card-text"><b>ID:</b><i className={"ms-2"}>{orderDetail.id}</i></p>
-                <p className="card-text"><b>Cliente:</b><i className={"ms-2"}>{orderDetail.customer}</i></p>
-                <p className="card-text"><b>Producto:</b><i className={"ms-2"}>{orderDetail.product}</i></p>
-                <p className="card-text"><b>Cantidad:</b><i className={"ms-2"}>{orderDetail.quantity}</i></p>
-                <p className="card-text"><b>Precio:</b><i className={"ms-2"}>{orderDetail.price}</i></p>
-                <p className="card-text"><b>SubTotal:</b><i className={"ms-2"}>{orderDetail.subtotal}</i></p>
+                <p className="card-text fw-medium">ID:<span className={"ms-2"} style={{color: "blueviolet"}}>
+                    {orderDetail.id}</span></p>
+                <p className="card-text fw-medium">Cliente:<span className={"ms-2"}
+                                                                        style={{color: "blueviolet"}}>
+                    {orderDetail.customer}</span>
+                </p>
+                <p className="card-text fw-medium">Producto:<span className={"ms-2"}
+                                                                         style={{color: "blueviolet"}}>
+                    {orderDetail.product}</span>
+                </p>
+                <p className="card-text fw-medium">Cantidad:<span className={"ms-2"}
+                                                                         style={{color: "blueviolet"}}>
+                    {orderDetail.quantity}</span>
+                </p>
+                <p className="card-text fw-medium">Precio:<span className={"ms-2"} style={{color: "blueviolet"}}>
+                    S/.{orderDetail.price}</span></p>
+                <p className="card-text fw-medium">SubTotal:<span className={"ms-2"}
+                                                                         style={{color: "blueviolet"}}>
+                    S/.{orderDetail.subtotal}</span></p>
                 <div className="d-flex justify-content-end align-items-center mt-3">
                     <button className="btn transparent-btn me-2" onClick={() => onEdit(orderDetail)}>
                         <FaEdit/> Editar

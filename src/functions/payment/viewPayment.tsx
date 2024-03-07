@@ -13,12 +13,12 @@ const PaymentCard: React.FC<PaymentCardProps> = ({payment, onEdit, onDelete}) =>
     return (
         <div className="card">
             <div className="card-body">
-                <h5 className="card-title text-center">{payment.customer}</h5>
-                <p className="card-text fw-bold">N° orden: <span className={"ms-2"} style={{color: "blueviolet"}}>
-                    <b>{payment.order_id}</b></span></p>
-                <p className="card-text fw-bold">Pagó:<span className={"ms-2"} style={{color: "blueviolet"}}>
+                <p className="card-title fw-bold text-center h5" style={{color: "blueviolet"}}>{payment.customer} </p>
+                <p className="card-text fw-medium">N° orden: <span className={"ms-2"} style={{color: "blueviolet"}}>
+                    {payment.order_id}</span></p>
+                <p className="card-text fw-medium">Pagó:<span className={"ms-2"} style={{color: "blueviolet"}}>
                     S/. {payment.amount}</span></p>
-                <p className="card-text fw-bold">Fecha de Pago:<span className={"ms-2"} style={{color: "blueviolet"}}>
+                <p className="card-text fw-medium">Fecha de Pago:<span className={"ms-2"} style={{color: "blueviolet"}}>
                         {payment.payment_date.toString()}</span>
                 </p>
                 <div className="d-flex justify-content-end align-items-center mt-3">
