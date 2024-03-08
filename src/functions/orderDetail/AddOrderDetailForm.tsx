@@ -55,7 +55,6 @@ const AddOrderDetailForm: React.FC<AddOrderDetailFormProps> = ({
                 console.error("Error fetching products:", error);
             }
         };
-
         fetchProducts();
     }, []);
 
@@ -90,17 +89,17 @@ const AddOrderDetailForm: React.FC<AddOrderDetailFormProps> = ({
             <Modal
                 isOpen={showModal}
                 onRequestClose={handleModalToggle}
-                contentLabel={isEditing ? "Edit Order Detail" : "Add Order Detail"}
+                contentLabel={isEditing ? "Editar Detalles " : "Agregar Detalles"}
                 className="add-modal"
                 overlayClassName="modal-overlay"
             >
                 <h2 className="modal-title text-center">
-                    {isEditing ? "Edit Order Detail" : "Add Order Detail"}
+                    {isEditing ? "Editar Detalles" : "Agregar Detalles"}
                 </h2>
                 <form>
                     <div>
                         <div className="form-group">
-                            <label htmlFor="order_id">Order ID</label>
+                            <label htmlFor="order_id">N° ID</label>
                             <input
                                 type="number"
                                 className="form-control"
@@ -109,10 +108,9 @@ const AddOrderDetailForm: React.FC<AddOrderDetailFormProps> = ({
                                 value={newOrderDetailData.order_id}
                                 onChange={handleInputChange}
                             />
-
                         </div>
                         <div className="form-group">
-                            <label htmlFor="product_id">Product</label>
+                            <label htmlFor="product_id">Producto</label>
                             <select
                                 className="form-control"
                                 id="product_id"
@@ -129,7 +127,7 @@ const AddOrderDetailForm: React.FC<AddOrderDetailFormProps> = ({
                             </select>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="quantity">Quantity</label>
+                            <label htmlFor="quantity">Cantidad</label>
                             <input
                                 type="number"
                                 className="form-control"
@@ -140,7 +138,7 @@ const AddOrderDetailForm: React.FC<AddOrderDetailFormProps> = ({
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="price">Price</label>
+                            <label htmlFor="price">Precio</label>
                             <input
                                 type="number"
                                 className="form-control"
@@ -161,7 +159,7 @@ const AddOrderDetailForm: React.FC<AddOrderDetailFormProps> = ({
                             onClick={handleCreateOrderDetail}
                             id="btn-primary"
                         >
-                            {isEditing ? "Save Changes" : "Create Order Detail"}
+                            {isEditing ? "Editar" : "Crear"}
                         </button>
                         <button
                             style={{
