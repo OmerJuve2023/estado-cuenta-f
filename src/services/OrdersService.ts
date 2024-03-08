@@ -2,6 +2,7 @@ import {api} from "./apiService.ts";
 
 export interface addOrder {
     [x: string]: string | number | readonly string[] | undefined;
+
     order_date: string | number | readonly string[] | undefined;
     customer_id: number;
     total_amount: number;
@@ -29,11 +30,15 @@ export const deleteOrder = async (id: number) => {
     const response = await api.delete(`/order/delete/${id}`);
     return response.data;
 }
-export const updateOrder = async (order: updateOrders) => {
+export const updateOrder = async (order: updateOrder) => {
     const response = await api.put(`/order/update/${order.id}`, order);
     return response.data;
 }
 export const getOrder = async (id: number) => {
     const response = await api.get(`/order/${id}`);
+    return response.data;
+}
+export const getOrderByAvailable = async () => {
+    const response = await api.get('/order/getByavailable');
     return response.data;
 }

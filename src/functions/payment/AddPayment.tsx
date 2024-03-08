@@ -3,6 +3,7 @@ import "../../CSS/AddForm.css";
 import React, {useEffect, useState} from "react";
 import {Payment} from "../../classes/Payment.ts";
 import {addPaymentS, updatePaymentS} from "./PaymentService.ts";
+import {getOrderByAvailableS} from "../order/OrderService.ts";
 
 interface AddPaymentFromProps {
     showModal: boolean;
@@ -39,6 +40,18 @@ const AddPaymentForm: React.FC<AddPaymentFromProps> = ({
             setIsEditing(false);
         }
     }, [editingPayment]);
+
+    useEffect(() => {
+        const fetchPayments = async () => {
+            try {
+                const paymentsList = await getOrderByAvailableS();
+                setCustomer(paymentsList);
+            } catch (error) {
+                console.error("Error fetching customer:", error);
+            }
+        };
+        fetchPayments().then(r => console.log(r));
+    }, []);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
@@ -95,6 +108,8 @@ const AddPaymentForm: React.FC<AddPaymentFromProps> = ({
                             value={newPaymentData.order_id}
                             onChange={handleInputChange}
                         />
+
+
                     </div>
                     {isEditing && (
                         <div className="form-group">

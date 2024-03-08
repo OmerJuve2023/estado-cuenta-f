@@ -1,6 +1,13 @@
 import {useEffect, useState} from "react";
 import Product from "../../classes/Product.ts";
-import {addProduct, createProduct, deleteProduct, listProducts, updateProduct} from "../../services/productService.ts";
+import {
+    addProduct,
+    createProduct,
+    deleteProduct,
+    getProductByName,
+    listProducts,
+    updateProduct
+} from "../../services/productService.ts";
 
 export function useProducts() {
     const [products, setProducts] = useState<Product[]>([]);
@@ -52,6 +59,14 @@ export const deleteProductS = async (productId: number) => {
         await deleteProduct(productId);
     } catch (error) {
         console.error("Error al eliminar producto:", error);
+        throw error;
+    }
+}
+export const getProductByNameS = async () => {
+    try {
+        return await getProductByName();
+    } catch (error) {
+        console.error("Error al buscar producto por nombre:", error);
         throw error;
     }
 }
