@@ -7,9 +7,9 @@
     width: 90%; /* Ajuste del ancho del modal */
     margin: 0 auto;
     padding: 20px;
-    background: linear-gradient(45deg, #FF5733, #FFC300); /* Fondo de degradado */
     border-radius: 10px; /* Redondear los bordes del modal */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    background: #da6736;
     transition: transform 0.3s ease, opacity 0.3s ease; /* Efecto de transición suave al abrir y cerrar el modal */
 }
 
@@ -51,8 +51,9 @@
 
 .modal-title {
     font-size: 24px; /* Tamaño de fuente más grande para el título */
-    color: #fff; /* Color de texto blanco */
+    /*color: #fff*/; /* Color de texto blanco */
     margin-bottom: 20px; /* Espaciado inferior */
+    color: #FFC300;
 }
 
 .form-group label {
@@ -66,7 +67,9 @@
     margin-bottom: 15px; /* Espaciado inferior */
     border: none; /* Quitamos el borde por defecto */
     background-color: rgba(255, 255, 255, 0.5); /* Color de fondo semi-transparente */
-    color: #fff; /* Color de texto blanco */
+    color: darkblue;
+
+    /* Color de texto blanco */
     transition: background-color 0.3s ease; /* Efecto de transición suave */
 }
 

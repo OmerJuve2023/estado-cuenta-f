@@ -25,7 +25,6 @@ const AddOrderDetailForm: React.FC<AddOrderDetailFormProps> = ({
         order_id: 0,
         product_id: 0,
         quantity: 0,
-        price: 0,
         subtotal: 0,
     };
 
@@ -134,17 +133,6 @@ const AddOrderDetailForm: React.FC<AddOrderDetailFormProps> = ({
                                 id="quantity"
                                 name="quantity"
                                 value={newOrderDetailData.quantity}
-                                onChange={handleInputChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="price">Precio</label>
-                            <input
-                                type="number"
-                                className="form-control"
-                                id="price"
-                                name="price"
-                                value={newOrderDetailData.price}
                                 onChange={handleInputChange}
                             />
                         </div>

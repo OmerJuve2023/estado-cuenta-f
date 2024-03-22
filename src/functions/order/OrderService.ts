@@ -4,7 +4,7 @@ import {
     addOrder,
     createOrder,
     deleteOrder,
-    getOrderByAvailable,
+    getOrderByAvailable, getOrderByCustomer,
     listOrders,
     updateOrder
 } from "../../services/OrdersService.ts";
@@ -69,6 +69,15 @@ export const getOrderByAvailableS= async () => {
         return  await getOrderByAvailable();
     }catch (error) {
         console.error("Error al obtener pedidos disponibles:", error);
+        throw error;
+    }
+}
+
+export const getOrderByCustomerS = async (id: number) => {
+    try {
+        return await getOrderByCustomer(id);
+    }catch (error) {
+        console.error("Error al obtener el nombre del cliente:", error);
         throw error;
     }
 }

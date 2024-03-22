@@ -1,7 +1,7 @@
 import Customer from "../../classes/Customer.ts";
 import "../../CSS/CardStyle.css";
-import {FaEdit, FaTrash} from "react-icons/fa";
-import React from "react";
+import {FaAngleDown, FaAngleUp, FaEdit, FaEnvelope, FaMapMarkerAlt, FaPhoneAlt, FaTrash, FaUser} from "react-icons/fa";
+import React, {useState} from "react";
 
 interface CustomerCardProps {
     customer: Customer;
@@ -10,30 +10,43 @@ interface CustomerCardProps {
 }
 
 const CustomerCard: React.FC<CustomerCardProps> = ({customer, onEdit, onDelete}) => {
+    const [showDetails, setShowDetails] = useState(false);
+    const toggleDetails = () => {
+        setShowDetails(!showDetails);
+    };
     return (
-        <div className="card">
+        <div className="card border-0">
             <div className="card-body">
-                <p className="card-text fw-bold text-center h5" style={{color: "blueviolet"}}>{customer.name}</p>
-                {/*<p className="card-text fw-medium">Email:<span className={"ms-2"} style={{color: "blueviolet"}}>
-                    {customer.email}</span></p>
-                <p className="card-text fw-medium">Teléfono<span className={"ms-2"} style={{color: "blueviolet"}}>
-                    {customer.phone}</span></p>
-                <p className="card-text fw-medium">Dirección
-                    <i className={"ms-2"}style={{color: "blueviolet"}}>
-                        {customer.address}</i></p>*/}
-                <div className="d-flex justify-content-end align-items-center mt-3">
-                    <button className="btn transparent-btn me-2" onClick={() => onEdit(customer)}>
-                        <FaEdit/> Editar
-                    </button>
-                    <button className="btn transparent-btn" onClick={() => onDelete(customer.id)}>
-                        <FaTrash/> Eliminar
-                    </button>
+                <div className="customer-info col-auto">
+                    <p className="card-text fw-medium"><FaUser className={"card-icon"}/> {customer.name}</p>
+                    {showDetails && (
+                        <div className={`customer-details ${showDetails ? 'show' : 'hide'}`}>
+                            <p className="card-text fw-medium"><FaEnvelope className={"card-icon"}/> {customer.email}</p>
+                            <p className="card-text fw-medium"><FaPhoneAlt className={"card-icon"}/> {customer.phone}</p>
+                            <p className="card-text fw-medium"><FaMapMarkerAlt className={"card-icon"}/> {customer.address}</p>
+                        </div>
+                    )}
+                </div>
+                <div className="mt-auto">
+                    <div className="action-buttons d-flex justify-content-center">
+                        {showDetails ? (
+                            <FaAngleUp className="expand-icon" onClick={toggleDetails} />
+                        ) : (
+                            <FaAngleDown className="expand-icon" onClick={toggleDetails} />
+                        )}
+                        <button className="btn transparent-btn me-2" onClick={() => onEdit(customer)}>
+                            <FaEdit/>
+                        </button>
+                        <button className="btn transparent-btn" onClick={() => onDelete(customer.id)}>
+                            <FaTrash/>
+                        </button>
+
+                    </div>
                 </div>
             </div>
         </div>
     );
 };
-
 interface ViewCustomerProps {
     customers: Customer[];
     onEdit: (customer: Customer) => void;

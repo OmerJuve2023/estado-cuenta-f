@@ -14,7 +14,6 @@ export const createOrderDetail = async (orderDetail: addOrderDetail) => {
 }
 export const listOrderDetails = async () => {
     const response = await api.get('/orderDetail/list');
-    console.log(response.data)
     return response.data;
 }
 export const deleteOrderDetail = async (id: number) => {
@@ -27,5 +26,9 @@ export const updateOrderDetail = async (orderDetail: OrderDetail) => {
 }
 export const getOrderDetail = async (id: number) => {
     const response = await api.get(`/orderDetail/${id}`);
+    return response.data;
+}
+export const getAllOrderByCustomer = async (id:number) => {
+    const response = await api.get(`/orderDetail/home/${id}`);
     return response.data;
 }

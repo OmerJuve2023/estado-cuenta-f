@@ -1,8 +1,9 @@
 import {useEffect, useState} from "react";
 import {OrderDetail} from "../../classes/OrderDetail.ts";
 import {
+    addOrderDetail,
     createOrderDetail,
-    deleteOrderDetail,
+    deleteOrderDetail, getAllOrderByCustomer, getOrderDetail,
     listOrderDetails,
     updateOrderDetail
 } from "../../services/OrderDetails.ts";
@@ -37,7 +38,7 @@ export function useOrderDetail() {
     return {orderDetail, loading, updateOrderDetail};
 }
 
-export const addOrderDetailS = async (orderDetail: OrderDetail) => {
+export const addOrderDetailS = async (orderDetail: addOrderDetail) => {
     try {
         await createOrderDetail(orderDetail);
     } catch (error) {
@@ -58,6 +59,24 @@ export const deleteOrderDetailS = async (orderDetailId: number) => {
         await deleteOrderDetail(orderDetailId);
     } catch (error) {
         console.error("Error al eliminar detalle de pedido:", error);
+        throw error;
+    }
+}
+
+export const getOrderDetailS = async (id: number) => {
+    try {
+        return await getOrderDetail(id);
+    } catch (error) {
+        console.error("Error al obtener detalle de pedido:", error);
+        throw error;
+    }
+}
+
+export const getAllOrderByCustomerS = async (id: number) => {
+    try {
+        return await getAllOrderByCustomer(id);
+    } catch (error) {
+        console.error("Error al obtener detalle de pedido:", error);
         throw error;
     }
 }

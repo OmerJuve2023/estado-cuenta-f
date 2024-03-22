@@ -1,17 +1,17 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
-import {addCustomerS, updateCustomerS} from "./CustomerService.ts";
+import { addCustomerS, updateCustomerS } from "./CustomerService.ts";
 import "../../CSS/AddForm.css";
 import Customer from "../../classes/Customer.ts";
+import { FaPlus, FaSave, FaTimes } from "react-icons/fa";
 
+Modal.setAppElement('#root');
 interface AddCustomerFormProps {
     showModal: boolean;
     handleModalToggle: () => void;
     updateCustomerList: () => void;
-    editingCustomer: Customer | null; // Nuevo prop para pasar los datos del cliente en edición
+    editingCustomer: Customer | null;
 }
-
-Modal.setAppElement('#root');
 
 const AddCustomerForm: React.FC<AddCustomerFormProps> = ({
                                                              showModal,
@@ -19,37 +19,37 @@ const AddCustomerForm: React.FC<AddCustomerFormProps> = ({
                                                              updateCustomerList,
                                                              editingCustomer
                                                          }) => {
-    const initialState = {
+    const initialCustomerState = {
         name: "",
         email: "",
         phone: "",
-        address: "",
+        address: ""
     };
 
-    const [newCustomerData, setNewCustomerData] = useState<Customer>(initialState);
-    const [isEditing, setIsEditing] = useState(false); // Variable de estado para controlar si se está editando un cliente
+    const [customerData, setCustomerData] = useState<Customer>(initialCustomerState);
+    const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
         if (editingCustomer) {
-            setNewCustomerData(editingCustomer);
-            setIsEditing(true); // Establecer isEditing a true si hay un cliente en edición
+            setCustomerData(editingCustomer);
+            setIsEditing(true);
         } else {
-            setNewCustomerData(initialState);
-            setIsEditing(false); // Establecer isEditing a false si no hay un cliente en edición
+            setCustomerData(initialCustomerState);
+            setIsEditing(false);
         }
     }, [editingCustomer]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = event.target;
-        setNewCustomerData({...newCustomerData, [name]: value});
+        const { name, value } = event.target;
+        setCustomerData({ ...customerData, [name]: value });
     };
 
     const handleSave = async () => {
         try {
             if (isEditing) {
-                await updateCustomerS(newCustomerData);
+                await updateCustomerS(customerData);
             } else {
-                await addCustomerS(newCustomerData);
+                await addCustomerS(customerData);
             }
             handleModalToggle();
             updateCustomerList();
@@ -60,16 +60,16 @@ const AddCustomerForm: React.FC<AddCustomerFormProps> = ({
     };
 
     const handleCancel = () => {
-        setNewCustomerData(initialState);
+        setCustomerData(initialCustomerState);
         handleModalToggle();
-        setIsEditing(false); // Restablecer isEditing a false al cancelar
+        setIsEditing(false);
     };
 
     return (
         <Modal
             isOpen={showModal}
             onRequestClose={handleModalToggle}
-            contentLabel={isEditing ? "Editar Cliente" : "Agregar Cliente"} // Usar isEditing para determinar el contenido del label
+            contentLabel={isEditing ? "Editar Cliente" : "Agregar Cliente"}
             className="add-modal"
             overlayClassName="modal-overlay"
         >
@@ -79,10 +79,10 @@ const AddCustomerForm: React.FC<AddCustomerFormProps> = ({
                     <label htmlFor="name">Nombre</label>
                     <input
                         type="text"
-                        className="form-control"
+                        className="form-control fw-bold"
                         id="name"
                         name="name"
-                        value={newCustomerData.name}
+                        value={customerData.name}
                         onChange={handleInputChange}
                     />
                 </div>
@@ -90,10 +90,10 @@ const AddCustomerForm: React.FC<AddCustomerFormProps> = ({
                     <label htmlFor="email">Correo Electrónico</label>
                     <input
                         type="email"
-                        className="form-control"
+                        className="form-control fw-bold"
                         id="email"
                         name="email"
-                        value={newCustomerData.email}
+                        value={customerData.email}
                         onChange={handleInputChange}
                     />
                 </div>
@@ -101,10 +101,10 @@ const AddCustomerForm: React.FC<AddCustomerFormProps> = ({
                     <label htmlFor="phone">Teléfono</label>
                     <input
                         type="text"
-                        className="form-control"
+                        className="form-control fw-bold"
                         id="phone"
                         name="phone"
-                        value={newCustomerData.phone}
+                        value={customerData.phone}
                         onChange={handleInputChange}
                     />
                 </div>
@@ -112,10 +112,10 @@ const AddCustomerForm: React.FC<AddCustomerFormProps> = ({
                     <label htmlFor="address">Dirección</label>
                     <input
                         type="text"
-                        className="form-control"
+                        className="form-control fw-bold"
                         id="address"
                         name="address"
-                        value={newCustomerData.address}
+                        value={customerData.address}
                         onChange={handleInputChange}
                     />
                 </div>
@@ -125,26 +125,27 @@ const AddCustomerForm: React.FC<AddCustomerFormProps> = ({
                             border: "none"
                         }}
                         type="button"
-                        className="btn btn-primary"
+                        className="btn btn-primary col-2"
                         onClick={handleSave}
                         id="btn-primary"
                     >
-                        {isEditing ? "Guardar Cambios" : "Crear Cliente"}
+                        {isEditing ? <FaSave className="me-1"/> : <FaPlus className="me-1"/>}
                     </button>
                     <button
                         style={{
                             border: "none"
                         }}
                         type="button"
-                        className="btn btn-secondary"
+                        className="btn btn-secondary col-2"
                         onClick={handleCancel}
                         id="btn-secondary"
                     >
-                        Cancelar
+                        <FaTimes className="me-1"/>
                     </button>
                 </div>
             </form>
         </Modal>
     );
 };
+
 export default AddCustomerForm;
