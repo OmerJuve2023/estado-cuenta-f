@@ -60,10 +60,10 @@ const HomeCard: React.FC<HomeCardProps> = ({home}) => {
                                             <p className="card-text ">
                                                 <FaMoneyBillAlt className={"card-icon"}/>
                                                 S/. {order.total_amount}</p>
-                                            <p className="card-text ">
+                                            <p className="card-text">
                                                 <FaClock className={"card-icon"}/>
                                                 {order.status}</p>
-                                            <p className={"card-text "}>
+                                            <p className={"card-text"}>
                                                 <FaCalendar className={"card-icon"}/>
                                                 {order.order_date}</p>
                                             {!isOrderDetailsVisible && (
@@ -101,20 +101,22 @@ const HomeCard: React.FC<HomeCardProps> = ({home}) => {
                                                                     <p className={"card-text fw-medium"}>
                                                                         <FaIdBadge className={"card-icon"}/>
                                                                         {detail.id}</p>
-                                                                    <p className="card-text">
-                                                                        <FaTshirt className={"card-icon"}/>
-                                                                        {detail.name}</p>
-                                                                    <p className="card-text">
-                                                                        <FaSortNumericUp className={"card-icon"}/>
-                                                                        {detail.quantity}
-                                                                    </p>
-                                                                    <p className="card-text">
-                                                                        <FaListUl className={"card-icon"}/>
-                                                                        S/.{detail.price}
-                                                                    </p>
-                                                                    <p className="card-text">
-                                                                        <FaMoneyBillAlt className={"card-icon"}/>
-                                                                        S/. {detail.subtotal}</p>
+                                                                    <div className={"ms-4"}>
+                                                                        <p className="card-text">
+                                                                            <FaTshirt className={"card-icon"}/>
+                                                                            {detail.name}</p>
+                                                                        <p className="card-text">
+                                                                            <FaSortNumericUp className={"card-icon"}/>
+                                                                            {detail.quantity}
+                                                                        </p>
+                                                                        <p className="card-text">
+                                                                            <FaListUl className={"card-icon"}/>
+                                                                            S/.{detail.price}
+                                                                        </p>
+                                                                        <p className="card-text">
+                                                                            <FaMoneyBillAlt className={"card-icon"}/>
+                                                                            S/. {detail.subtotal}</p>
+                                                                    </div>
                                                                 </div>
                                                             ))}
                                                         </div>
