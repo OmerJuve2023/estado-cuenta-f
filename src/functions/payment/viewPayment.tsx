@@ -1,7 +1,7 @@
 import {Payment} from "../../classes/Payment.ts";
 import "../../CSS/CardStyle.css";
-import React from "react";
-import {FaEdit, FaTrash} from "react-icons/fa";
+import React, {useState} from "react";
+import {FaAngleDown, FaAngleUp, FaCalendar, FaEdit, FaMoneyBillAlt, FaReceipt, FaTrash, FaUser} from "react-icons/fa";
 
 interface PaymentCardProps {
     payment: Payment;
@@ -10,29 +10,53 @@ interface PaymentCardProps {
 }
 
 const PaymentCard: React.FC<PaymentCardProps> = ({payment, onEdit, onDelete}) => {
+    const [showDetails, setShowDetails] = useState(false);
+    const toggleDetails = () => {
+        setShowDetails(!showDetails);
+    };
     return (
-        <div className="card">
+        <div className="card border-0">
             <div className="card-body">
-                <p className="card-title fw-bold text-center h5" style={{color: "blueviolet"}}>{payment.customer} </p>
-                <p className="card-text fw-medium">N° orden: <span className={"ms-2"} style={{color: "blueviolet"}}>
-                    {payment.order_id}</span></p>
-                <p className="card-text fw-medium">Pagó:<span className={"ms-2"} style={{color: "blueviolet"}}>
-                    S/. {payment.amount}</span></p>
-                <p className="card-text fw-medium">Fecha de Pago:<span className={"ms-2"} style={{color: "blueviolet"}}>
-                        {payment.payment_date.toString()}</span>
-                </p>
-                <div className="d-flex justify-content-end align-items-center mt-3">
-                    <button className="btn transparent-btn me-2" onClick={() => onEdit(payment)}>
-                        <FaEdit/> Editar
-                    </button>
-                    <button className="btn transparent-btn" onClick={() => onDelete(payment.id)}>
-                        <FaTrash/> Eliminar
-                    </button>
+                <div className={"customer-info col-auto"}>
+                    <p className="card-text fw-medium">
+                        <FaUser className={"card-icon"}/>
+                        {payment.customer}
+                    </p>
+                    <p className="card-text fw-medium">
+                        <FaMoneyBillAlt className={"card-icon"}/>
+                        S/.{payment.amount}
+                    </p>
+                    {showDetails && (
+                        <div className={`customer-details ${showDetails ? 'show' : 'hide'}`}>
+                            <p className="card-text fw-medium">
+                                <FaReceipt className={"card-icon"}/>
+                                {payment.order_id}
+                            </p>
+                            <p className="card-text fw-medium">
+                                <FaCalendar className={"card-icon"}/>
+                                {payment.payment_date.toString()}
+                            </p>
+                        </div>
+                    )}
+                </div>
+                <div className={"mt-auto"}>
+                    <div className="action-buttons d-flex justify-content-center">
+                        {showDetails ? (
+                            <FaAngleUp className="expand-icon" onClick={toggleDetails}/>
+                        ) : (
+                            <FaAngleDown className="expand-icon" onClick={toggleDetails}/>
+                        )}
+                        <button className="btn transparent-btn me-2" onClick={() => onEdit(payment)}>
+                            <FaEdit/>
+                        </button>
+                        <button className="btn transparent-btn" onClick={() => onDelete(payment.id)}>
+                            <FaTrash/>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     )
-        ;
 }
 
 interface ViewPaymentProps {

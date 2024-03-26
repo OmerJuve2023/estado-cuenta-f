@@ -1,7 +1,15 @@
 import {Orders} from "../../classes/Orders.ts";
 import "../../CSS/CardStyle.css";
-import React from "react";
-import {FaEdit, FaTrash} from "react-icons/fa";
+import React, {useState} from "react";
+import {
+    FaAngleDown,
+    FaAngleUp, FaCalendar, FaClock,
+    FaEdit,
+    FaMoneyCheck,
+    FaReceipt,
+    FaTrash,
+    FaUser
+} from "react-icons/fa";
 
 interface OrderCardProps {
     order: Orders;
@@ -11,30 +19,46 @@ interface OrderCardProps {
 }
 
 const OrderCard: React.FC<OrderCardProps> = ({order, onEdit, onDelete}) => {
+    const [showDetails, setShowDetails] = useState(false);
+    const toggleDetails = () => {
+        setShowDetails(!showDetails);
+    };
     return (
-        <div className="card">
+        <div className="card border-0">
             <div className="card-body">
-                <p className="card-text fw-medium">Cliente:<span className={"ms-2"}
-                                                                        style={{color: "blueviolet"}}>
-                    {order.name}</span></p>
-                <p className="card-text fw-medium">N° orden:<span className={"ms-2"}
-                                                                         style={{color: "blueviolet"}}>
-                    {order.id}</span></p>
-                <p className="card-text fw-medium">Fecha de Pedido:<span
-                    className={"ms-2"} style={{color: "blueviolet"}}>
-                    {order.order_date.toString()}</span>
-                </p>
-                <p className="card-text fw-medium">Total:<span className={"ms-2"} style={{color: "blueviolet"}}>
-                   S/. {order.total_amount}</span></p>
-                <p className="card-text fw-medium">Estado:<span className={"ms-2"} style={{color: "blueviolet"}}>
-                    {order.status}</span></p>
-                <div className="d-flex justify-content-end align-items-center mt-3">
-                    <button className="btn transparent-btn me-2" onClick={() => onEdit(order)}>
-                        <FaEdit/> Editar
-                    </button>
-                    <button className="btn transparent-btn" onClick={() => onDelete(order.id)}>
-                        <FaTrash/> Eliminar
-                    </button>
+                <div className={"customer-info col-auto"}>
+                    <p className={"card-text fw-medium"}><FaUser className={"card-icon"}/>{order.name}</p>
+                    <p className="card-text fw-medium"><FaMoneyCheck className={"card-icon"}/>S/.{order.total_amount}
+                    </p>
+                    {showDetails && (
+                        <div className={`customer-details ${showDetails ? 'show' : 'hide'}`}>
+                            <p className="card-text fw-medium">
+                                <FaReceipt className={"card-icon"}/>
+                                {order.id}</p>
+                            <p className="card-text fw-medium">
+                                <FaCalendar className={"card-icon"}/>
+                                {order.order_date.toString()}
+                            </p>
+                            <p className="card-text fw-medium">
+                                <FaClock className={"card-icon"}/>
+                                {order.status}</p>
+                        </div>
+                    )}
+                </div>
+                <div className={"mt-auto"}>
+                    <div className="action-buttons d-flex justify-content-center">
+                        {showDetails ? (
+                            <FaAngleUp className="expand-icon" onClick={toggleDetails}/>
+                        ) : (
+                            <FaAngleDown className="expand-icon" onClick={toggleDetails}/>
+                        )}
+                        <button className="btn transparent-btn me-2" onClick={() => onEdit(order)}>
+                            <FaEdit/>
+                        </button>
+                        <button className="btn transparent-btn" onClick={() => onDelete(order.id)}>
+                            <FaTrash/>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

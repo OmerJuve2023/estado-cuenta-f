@@ -47,6 +47,7 @@ const CustomerCard: React.FC<CustomerCardProps> = ({customer, onEdit, onDelete})
         </div>
     );
 };
+
 interface ViewCustomerProps {
     customers: Customer[];
     onEdit: (customer: Customer) => void;

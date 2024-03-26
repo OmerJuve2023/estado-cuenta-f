@@ -6,4 +6,5 @@ export interface OrderDetail {
     subtotal: number;
     customer: string;
     product: string;
+    price: number;
 }

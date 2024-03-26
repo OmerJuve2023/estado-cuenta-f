@@ -1,13 +1,23 @@
 import {Todo} from "./HomeService.ts";
 import React, {useState} from "react";
+import {
+    FaAngleDown,
+    FaAngleUp,
+    FaCalendar,
+    FaClock, FaIdBadge,
+    FaListUl,
+    FaMoneyBillAlt,
+    FaSortNumericUp,
+    FaTshirt,
+    FaUser
+} from "react-icons/fa";
+import "../../CSS/CardStyle.css"
 
 interface HomeCardProps {
     home: Todo;
-    onEdit: (home: Todo) => void;
-    onDelete: (homeId: number) => void;
 }
 
-const HomeCard: React.FC<HomeCardProps> = ({home, onEdit, onDelete}) => {
+const HomeCard: React.FC<HomeCardProps> = ({home}) => {
     const [isOrderVisible, setIsOrderVisible] = useState(false);
     const [isOrderDetailsVisible, setIsOrderDetailsVisible] = useState(false);
 
@@ -20,80 +30,142 @@ const HomeCard: React.FC<HomeCardProps> = ({home, onEdit, onDelete}) => {
     };
 
     return (
-        <div className="card">
+        <div className="card border-0 mb-4">
             <div className="card-body">
-                <p className="card-text fw-bold h5 text-center">
-                    <span style={{color: "blueviolet"}}>{home.name_customer}</span>
-                </p>
-                {home.orders.map((order) => (
-                    <div key={order.id}>
-                        <button className="btn" onClick={toggleOrderVisibility}>
-                            {isOrderVisible ? "Ocultar" : "Mostrar"}
-                        </button>
-                        {!isOrderVisible && (
-                            <div>
-                                <p className="card-text fw-medium">S/. {order.total_amount}</p>
-                                <p className="card-text fw-medium">{order.status}</p>
-                            </div>
-                        )}
-                        {isOrderVisible && (
-                            <div>
-                                <p className="card-text fw-medium">Fecha {order.order_date}</p>
-                                <p className="card-text fw-medium">Total: S/. {order.total_amount}</p>
-                                <p className="card-text fw-medium">Estado: {order.status}</p>
-                                <button className="btn" onClick={toggleOrderDetailsVisibility}>
-                                    {isOrderDetailsVisible ? "Ocultar Detalles " : "Mostrar Detalles "}
-                                </button>
-                                <div>
-                                    <p className="card-text fw-medium">Detalles de la Orden:</p>
-                                    {order.orderDetails.map((detail) => (
-                                        <div key={detail.id}>
+                <div className="customer-info col-3">
+                    <FaUser className={"card-icon"}/>
+                    <p className="card-text fw-medium">{home.name_customer}</p>
+                </div>
+                <table className="table">
+                    <tbody>
+                    {home.orders.map((order) => (
+                        <React.Fragment key={order.id}>
+                            <tr>
+                                <td>
+                                    <p className="card-text fw-medium">N° {order.id}</p>
+                                </td>
+                                <td>
+                                    {!isOrderVisible && (
+                                        <div>
+                                            <p className="card-text">
+                                                <FaMoneyBillAlt className={"card-icon"}/>
+                                                S/. {order.total_amount}</p>
+                                            <p className="card-text ">
+                                                <FaClock className={"card-icon"}/>
+                                                {order.status}</p>
+                                        </div>
+                                    )}
+                                    {isOrderVisible && (
+                                        <div>
+                                            <p className="card-text ">
+                                                <FaMoneyBillAlt className={"card-icon"}/>
+                                                S/. {order.total_amount}</p>
+                                            <p className="card-text ">
+                                                <FaClock className={"card-icon"}/>
+                                                {order.status}</p>
+                                            <p className={"card-text "}>
+                                                <FaCalendar className={"card-icon"}/>
+                                                {order.order_date}</p>
                                             {!isOrderDetailsVisible && (
-                                                <div>
-
+                                                <div className={"ms-5"}>
+                                                    <div className={"row"}>
+                                                        <div className={"col"}>
+                                                            <p className="card-text fw-medium">Detalles de la Orden:</p>
+                                                            {order.orderDetails.map((detail) => (
+                                                                <div key={detail.id}>
+                                                                    <p className="card-text">
+                                                                        <FaTshirt className={"card-icon"}/>
+                                                                        {detail.name}</p>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                        <div className={"col"}>
+                                                            {isOrderDetailsVisible ? (
+                                                                <FaAngleUp className="expand-icon"
+                                                                           onClick={toggleOrderDetailsVisibility}/>
+                                                            ) : (
+                                                                <FaAngleDown className="expand-icon"
+                                                                             onClick={toggleOrderDetailsVisibility}/>
+                                                            )}
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             )}
                                             {isOrderDetailsVisible && (
-                                                <div>
-                                                    <p className="card-text">Nombre del Producto: {detail.name}</p>
-                                                    <p className="card-text">Subtotal: S/. {detail.subtotal}</p>
+                                                <div className={"ms-5"}>
+                                                    <div className={"row"}>
+                                                        <div className={"col"}>
+                                                            <p className="card-text fw-medium">Detalles de la Orden:</p>
+                                                            {order.orderDetails.map((detail) => (
+                                                                <div key={detail.id} className={"mb-4"}>
+                                                                    <p className={"card-text fw-medium"}>
+                                                                        <FaIdBadge className={"card-icon"}/>
+                                                                        {detail.id}</p>
+                                                                    <p className="card-text">
+                                                                        <FaTshirt className={"card-icon"}/>
+                                                                        {detail.name}</p>
+                                                                    <p className="card-text">
+                                                                        <FaSortNumericUp className={"card-icon"}/>
+                                                                        {detail.quantity}
+                                                                    </p>
+                                                                    <p className="card-text">
+                                                                        <FaListUl className={"card-icon"}/>
+                                                                        S/.{detail.price}
+                                                                    </p>
+                                                                    <p className="card-text">
+                                                                        <FaMoneyBillAlt className={"card-icon"}/>
+                                                                        S/. {detail.subtotal}</p>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                        <div className={"col-2"}>
+                                                            {isOrderDetailsVisible ? (
+                                                                <FaAngleUp className="expand-icon"
+                                                                           onClick={toggleOrderDetailsVisibility}/>
+                                                            ) : (
+                                                                <FaAngleDown className="expand-icon"
+                                                                             onClick={toggleOrderDetailsVisibility}/>
+                                                            )}
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             )}
 
                                         </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                ))}
+                                    )}
+                                </td>
+                                <td>
+                                    {isOrderVisible ? (
+                                        <FaAngleUp className="expand-icon" onClick={toggleOrderVisibility}/>
+                                    ) : (
+                                        <FaAngleDown className="expand-icon" onClick={toggleOrderVisibility}/>
+                                    )}
+                                </td>
+                            </tr>
+                        </React.Fragment>
+                    ))}
+                    </tbody>
+                </table>
             </div>
         </div>
     );
 };
 
-
 interface ViewHomeProps {
     homes: Todo[];
-    onEdit: (home: Todo) => void;
-    onDelete: (homeId: number) => void;
 }
 
-const ViewHome: React.FC<ViewHomeProps> = ({homes, onEdit, onDelete}) => {
+const ViewHome: React.FC<ViewHomeProps> = ({homes}) => {
     return (
-        <div className="container">
-            <div className="row">
-                {homes.map((todo) => (
-                    <div className="col-lg-4 col-md-6 mb-4" key={todo.id_customer}>
-                        <HomeCard
-                            key={todo.id_customer}
-                            home={todo}
-                            onEdit={onEdit}
-                            onDelete={onDelete}
-                        />
-                    </div>
-                ))}
-            </div>
+        <div className="row">
+            {homes.map((todo) => (
+                <div className="col-lg-12 mb-4" key={todo.id_customer}>
+                    <HomeCard
+                        key={todo.id_customer}
+                        home={todo}
+                    />
+                </div>
+            ))}
         </div>
     );
 };
