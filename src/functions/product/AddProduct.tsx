@@ -73,16 +73,16 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
             <Modal
                 isOpen={showModal}
                 onRequestClose={handleModalToggle}
-                contentLabel={isEditing ? "Edit Product" : "Add Product"}
+                contentLabel={isEditing ? "Editar Producto" : "Agregar Producto"}
                 className="add-modal"
                 overlayClassName="modal-overlay"
             >
                 <h2 className="modal-title text-center">
-                    {isEditing ? "Edit Product" : "Add Product"}
+                    {isEditing ? "Editar Producto" : "Agregar Producto"}
                 </h2>
                 <form>
                     <div className="form-group">
-                        <label htmlFor="name">Product Name</label>
+                        <label htmlFor="name">Nombre</label>
                         <input
                             type="text"
                             className="form-control"
@@ -93,7 +93,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="price">Price</label>
+                        <label htmlFor="price">Precio</label>
                         <input
                             type="number"
                             className="form-control"
@@ -103,7 +103,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
                             onChange={handleInputChange}
                         />
                     </div>
-                    <div className="form-group">
+                   {/* <div className="form-group">
                         <label htmlFor="description">Description</label>
                         <input
                             type="text"
@@ -113,7 +113,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
                             value={newProductData.description}
                             onChange={handleInputChange}
                         />
-                    </div>
+                    </div>*/}
                     <div className="d-flex justify-content-center mt-3 button-container">
                         <button
                             style={{
@@ -124,7 +124,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
                             onClick={handleSave}
                             id={"btn-primary"}
                         >
-                            {isEditing ? "Edit" : "Add"}
+                            {isEditing ? "Editar" : "Agregar"}
                         </button>
                         <button
                             style={{

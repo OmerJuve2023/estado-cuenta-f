@@ -15,7 +15,7 @@ export function DataViewCustomer() {
     const filteredCustomers = customers.filter(customer => {
         return customer.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
-    // Método para manejar la edición del cliente
+
     const handleEdit = (customer: Customer) => {
         setEditingCustomer(customer);
         handleModalToggle(); // Abre el modal de edición
@@ -67,7 +67,7 @@ export function DataViewCustomer() {
                 showModal={showModal}
                 handleModalToggle={handleModalClose}
                 updateCustomerList={updateCustomers}
-                editingCustomer={editingCustomer} // Pasar los datos del cliente en edición al modal
+                editingCustomer={editingCustomer}
             />
         </div>
     );

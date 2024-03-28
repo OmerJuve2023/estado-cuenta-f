@@ -62,7 +62,6 @@ const AddOrderForm: React.FC<AddOrderFormProps> = ({
             }
             handleModalToggle();
             updateOrderList();
-            console.log("Orden creada/editada con éxito");
         } catch (error) {
             console.error("Error creating/updating order:", error);
         }
@@ -78,15 +77,15 @@ const AddOrderForm: React.FC<AddOrderFormProps> = ({
         <Modal
             isOpen={showModal}
             onRequestClose={handleModalToggle}
-            contentLabel={isEditing ? "Edit Order" : "Add Order"}
+            contentLabel={isEditing ? "Editar Orden" : "Agregar Orden"}
             className="add-modal"
             overlayClassName="modal-overlay"
         >
-            <h2 className="modal-title text-center">{isEditing ? "Edit Order" : "Add Order"}</h2>
+            <h2 className="modal-title text-center">{isEditing ? "Editar Orden" : "Agregar Orden"}</h2>
             <form>
                 {!isEditing && (
                     <div className="form-group">
-                        <label htmlFor="customer_id">Customer ID</label>
+                        <label htmlFor="customer_id">Cliente</label>
                         <input
                             type="number"
                             className="form-control"
@@ -100,7 +99,7 @@ const AddOrderForm: React.FC<AddOrderFormProps> = ({
                 {isEditing && (
                     <div>
                         <div className="form-group">
-                            <label htmlFor="customer_id">Customer ID</label>
+                            <label htmlFor="customer_id">Cliente</label>
                             <input
                                 type="number"
                                 className="form-control"
@@ -111,7 +110,7 @@ const AddOrderForm: React.FC<AddOrderFormProps> = ({
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="order_date">Order Date</label>
+                            <label htmlFor="order_date">Fecha de Orden</label>
                             <input
                                 type="datetime-local"
                                 className="form-control"
@@ -122,7 +121,7 @@ const AddOrderForm: React.FC<AddOrderFormProps> = ({
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="total_amount">Total Amount</label>
+                            <label htmlFor="total_amount">Total</label>
                             <input
                                 type="number"
                                 className="form-control"
@@ -133,7 +132,7 @@ const AddOrderForm: React.FC<AddOrderFormProps> = ({
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="status">Status</label>
+                            <label htmlFor="status">Estado</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -155,7 +154,7 @@ const AddOrderForm: React.FC<AddOrderFormProps> = ({
                         onClick={handleSave}
                         id="btn-primary"
                     >
-                        {isEditing ? "Save Changes" : "Create Order"}
+                        {isEditing ? "Editar" : "Crear Orden"}
                     </button>
                     <button
                         style={{
@@ -166,7 +165,7 @@ const AddOrderForm: React.FC<AddOrderFormProps> = ({
                         onClick={handleCancel}
                         id="btn-secondary"
                     >
-                        Cancel
+                        Cancelar
                     </button>
                 </div>
             </form>

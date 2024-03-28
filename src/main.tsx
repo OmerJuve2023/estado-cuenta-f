@@ -8,13 +8,14 @@ import {DataViewCustomer} from "./components/customerComponent.tsx";
 import {DataViewPayment} from "./components/paymentComponent.tsx";
 import {DataViewOrderDetail} from "./components/orderDetailComponent.tsx";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.min.js";
+import 'bootstrap/dist/js/bootstrap.min.js';
+import {HomeComponent} from "./components/homeComponent.tsx";
 
 
 const router = createHashRouter([
     {
         path: '/',
-        element: <DataViewOrder/>
+        element: <HomeComponent/>
     },
     {
         path: '/list/products',

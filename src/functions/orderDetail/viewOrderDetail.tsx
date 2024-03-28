@@ -1,7 +1,18 @@
 import {OrderDetail} from "../../classes/OrderDetail.ts";
 import "../../CSS/CardStyle.css";
-import React from "react";
-import {FaEdit, FaTrash} from "react-icons/fa";
+import React, {useState} from "react";
+import {
+    FaAngleDown,
+    FaAngleUp,
+    FaEdit,
+    FaListUl,
+    FaMoneyBillAlt,
+    FaReceipt,
+    FaSortNumericUp,
+    FaTrash,
+    FaTshirt,
+    FaUser
+} from "react-icons/fa";
 
 interface OrderDetailCardProps {
     orderDetail: OrderDetail;
@@ -10,35 +21,56 @@ interface OrderDetailCardProps {
 }
 
 const OrderDetailCard: React.FC<OrderDetailCardProps> = ({orderDetail, onEdit, onDelete}) => {
+    const [showDetails, setShowDetails] = useState(false);
+    const toggleDetails = () => {
+        setShowDetails(!showDetails);
+    };
     return (
-        <div className="card">
+        <div className="card border-0">
             <div className="card-body">
-                <p className="card-text fw-medium">ID:<span className={"ms-2"} style={{color: "blueviolet"}}>
-                    {orderDetail.id}</span></p>
-                <p className="card-text fw-medium">Cliente:<span className={"ms-2"}
-                                                                        style={{color: "blueviolet"}}>
-                    {orderDetail.customer}</span>
-                </p>
-                <p className="card-text fw-medium">Producto:<span className={"ms-2"}
-                                                                         style={{color: "blueviolet"}}>
-                    {orderDetail.product}</span>
-                </p>
-                <p className="card-text fw-medium">Cantidad:<span className={"ms-2"}
-                                                                         style={{color: "blueviolet"}}>
-                    {orderDetail.quantity}</span>
-                </p>
-                <p className="card-text fw-medium">Precio:<span className={"ms-2"} style={{color: "blueviolet"}}>
-                    S/.{orderDetail.price}</span></p>
-                <p className="card-text fw-medium">SubTotal:<span className={"ms-2"}
-                                                                         style={{color: "blueviolet"}}>
-                    S/.{orderDetail.subtotal}</span></p>
-                <div className="d-flex justify-content-end align-items-center mt-3">
-                    <button className="btn transparent-btn me-2" onClick={() => onEdit(orderDetail)}>
-                        <FaEdit/> Editar
-                    </button>
-                    <button className="btn transparent-btn" onClick={() => onDelete(orderDetail.id)}>
-                        <FaTrash/> Eliminar
-                    </button>
+                <div className={"customer-info col-auto"}>
+                    <p className="card-text fw-medium">
+                        <FaUser className={"card-icon"}/>
+                        {orderDetail.customer}
+                    </p>
+                    <p className="card-text fw-medium">
+                        <FaMoneyBillAlt className={"card-icon"}/>
+                        S/.{orderDetail.subtotal}</p>
+                    {showDetails && (
+                        <div className={`customer-details ${showDetails ? 'show' : 'hide'}`}>
+                            <p className="card-text fw-medium">
+                                <FaReceipt className={"card-icon"}/>
+                                {orderDetail.id}
+                            </p>
+                            <p className="card-text fw-medium">
+                                <FaTshirt className={"card-icon"}/>
+                                {orderDetail.product}
+                            </p>
+                            <p className="card-text fw-medium">
+                                <FaSortNumericUp className={"card-icon"}/>
+                                S/.{orderDetail.quantity}
+                            </p>
+                            <p className="card-text fw-medium">
+                                <FaListUl className={"card-icon"}/>
+                                S/.{orderDetail.price}
+                            </p>
+                        </div>
+                    )}
+                </div>
+                <div className={"mt-auto"}>
+                    <div className="action-buttons d-flex justify-content-center">
+                        {showDetails ? (
+                            <FaAngleUp className="expand-icon" onClick={toggleDetails}/>
+                        ) : (
+                            <FaAngleDown className="expand-icon" onClick={toggleDetails}/>
+                        )}
+                        <button className="btn transparent-btn me-2" onClick={() => onEdit(orderDetail)}>
+                            <FaEdit/>
+                        </button>
+                        <button className="btn transparent-btn" onClick={() => onDelete(orderDetail.id)}>
+                            <FaTrash/>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

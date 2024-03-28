@@ -1,4 +1,5 @@
 import {api} from "./apiService.ts";
+import {Orders} from "../classes/Orders.ts";
 
 export interface addOrder {
     [x: string]: string | number | readonly string[] | undefined;
@@ -29,11 +30,19 @@ export const deleteOrder = async (id: number) => {
     const response = await api.delete(`/order/delete/${id}`);
     return response.data;
 }
-export const updateOrder = async (order: updateOrders) => {
+export const updateOrder = async (order: Orders) => {
     const response = await api.put(`/order/update/${order.id}`, order);
     return response.data;
 }
 export const getOrder = async (id: number) => {
     const response = await api.get(`/order/${id}`);
+    return response.data;
+}
+export const getOrderByAvailable = async () => {
+    const response = await api.get('/order/getByAvailable');
+    return response.data;
+}
+export const getOrderByCustomer = async (id: number) => {
+    const response = await api.get(`/order/getOrderByCustomer/${id}`);
     return response.data;
 }

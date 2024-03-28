@@ -1,64 +1,144 @@
 .card {
-    border-radius: 10px; /* Borde redondeado */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    transition: box-shadow 0.3s ease; /* Transición suave al pasar el mouse */
-    background: linear-gradient(45deg, rgba(255, 87, 51, 0.7), rgba(255, 195, 0, 0.7)); /* Fondo con degradado y transparencia */
-    color: #ffffff; /* Color de texto blanco */
-    padding: 20px; /* Espaciado interno */
+    position: relative;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    background: transparent;
+    border-radius: 10px;
+    overflow: hidden;
+    border: none;
 }
 
 .card:hover {
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Aumentar la sombra al pasar el mouse */
-}
-
-.card-title {
-    color: #ffffff; /* Color de texto blanco */
-    font-size: 1.5rem; /* Tamaño del título */
-    font-weight: bold; /* Texto en negrita */
-    margin-bottom: 10px; /* Margen inferior */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
+    transform: translateY(-5px);
 }
 
 .card-text {
-    color: rgba(255, 0, 200, 0.85); /* Color de texto blanco con transparencia */
-    font-size: 1rem; /* Tamaño del texto */
-    margin-bottom: 5px; /* Margen inferior */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    margin-bottom: 0.5rem; /* Ajustar el espacio entre párrafos */
+    color: blue;
+    font-size: 1rem; /* Tamaño de fuente base */
 }
 
-.container {
-    padding: 20px 0; /* Espaciado alrededor de las tarjetas */
+.card-body {
+    padding: 1rem; /* Espaciado interno */
+    border: none;
 }
 
 .transparent-btn {
-    background-color: transparent;
-    color: rgba(255, 255, 255, 0.7);
-    border-color: transparent;
-    margin-right: 0.5rem; /* Espaciado entre los botones */
-    padding: 0.375rem 0.75rem; /* Espaciado interno de los botones */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .transparent-btn:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+    color: rgba(220, 196, 196, 0.9);
 }
 
+.card-name {
+    font-size: 1.2rem; /* Tamaño de fuente del nombre del cliente */
+    margin-bottom: 0.75rem; /* Espaciado entre el nombre y otros elementos */
+}
 
-/* Estilos para dispositivos móviles */
-@media (max-width: 576px) {
-    .card {
-        border-radius: 12px;
+.card-icons {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem; /* Espaciado superior para los iconos */
+}
+
+.card-icon {
+    margin: 0 0.5rem; /* Espaciado entre los iconos */
+    font-size: 1.2rem; /* Tamaño de los iconos */
+    color: rgba(255, 87, 51, 0.7);
+}
+
+.card-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+
+.customer-info {
+    flex-grow: 1;
+}
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+}
+
+/* Media query para pantallas de tamaño mediano (laptops y tablets en posición horizontal) */
+@media screen and (max-width: 1024px) {
+    .card-text {
+        font-size: 0.9rem;
+    }
+
+    .card-name {
+        font-size: 1rem;
+    }
+
+    .card-icon {
+        font-size: 1rem;
+    }
+
+    .transparent-btn {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem; /* Ajustar el espaciado interno del botón */
     }
 }
 
-/* Estilos para tablets */
-@media (min-width: 577px) and (max-width: 992px) {
-    .card {
-        border-radius: 10px;
+/* Media query para tablets en posición vertical y dispositivos móviles */
+@media screen and (max-width: 768px) {
+    .card-text {
+        font-size: 0.8rem;
+    }
+
+    .card-name {
+        font-size: 0.9rem;
+    }
+
+    .card-icon {
+        font-size: 0.9rem;
+    }
+
+    .transparent-btn {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
     }
 }
 
-/* Estilos para laptops y pantallas de escritorio */
-@media (min-width: 993px) {
-    .card {
-        border-radius: 8px;
+/* Media query para pantallas de tamaño pequeño (celulares) */
+@media screen and (max-width: 576px) {
+    .card-text {
+        font-size: 0.7rem;
     }
+
+    .card-name {
+        font-size: 0.8rem;
+    }
+
+    .card-icon {
+        font-size: 0.8rem;
+    }
+
+    .transparent-btn {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.6rem;
+    }
+}
+
+.triangle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-bottom: 15px solid white; /* Color de fondo del contenedor */
+    cursor: pointer;
+    z-index: 1; /* Asegurar que esté sobre el contenido */
+}
+
+.triangle.active {
+    border-bottom-color: transparent; /* Cambiar el color de fondo cuando está activo */
 }

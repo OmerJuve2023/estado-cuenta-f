@@ -3,6 +3,7 @@ import "../../CSS/AddForm.css";
 import React, {useEffect, useState} from "react";
 import {Payment} from "../../classes/Payment.ts";
 import {addPaymentS, updatePaymentS} from "./PaymentService.ts";
+import {getOrderByAvailableS} from "../order/OrderService.ts";
 
 interface AddPaymentFromProps {
     showModal: boolean;
@@ -40,6 +41,18 @@ const AddPaymentForm: React.FC<AddPaymentFromProps> = ({
         }
     }, [editingPayment]);
 
+    useEffect(() => {
+        const fetchPayments = async () => {
+            try {
+                const paymentsList = await getOrderByAvailableS();
+                setCustomer(paymentsList);
+            } catch (error) {
+                console.error("Error fetching customer:", error);
+            }
+        };
+        fetchPayments().then(r => console.log(r));
+    }, []);
+
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
         if (name === "payment_date") {
@@ -60,7 +73,6 @@ const AddPaymentForm: React.FC<AddPaymentFromProps> = ({
             }
             handleModalToggle();
             updatePaymentList();
-            console.log("Payment created/edited successfully");
         } catch (error) {
             console.error("Error creating/updating payment:", error);
         }
@@ -82,11 +94,11 @@ const AddPaymentForm: React.FC<AddPaymentFromProps> = ({
                 overlayClassName="modal-overlay"
             >
                 <h2 className="modal-title text-center">
-                    {isEditing ? "Edit Payment" : "Add Payment"}
+                    {isEditing ? "Editar Pago" : "Agregar Pago"}
                 </h2>
                 <form>
                     <div className="form-group">
-                        <label htmlFor="order_id">Order ID</label>
+                        <label htmlFor="order_id">N° Orden</label>
                         <input
                             type="number"
                             className="form-control"
@@ -98,7 +110,7 @@ const AddPaymentForm: React.FC<AddPaymentFromProps> = ({
                     </div>
                     {isEditing && (
                         <div className="form-group">
-                            <label htmlFor="payment_date">Payment Date</label>
+                            <label htmlFor="payment_date">Fecha de Pago</label>
                             <input
                                 type="datetime-local"
                                 className="form-control"
@@ -111,7 +123,7 @@ const AddPaymentForm: React.FC<AddPaymentFromProps> = ({
                     )
                     }
                     <div className="form-group">
-                        <label htmlFor="amount">Amount</label>
+                        <label htmlFor="amount">Abono</label>
                         <input
                             type="number"
                             className="form-control"
@@ -131,7 +143,7 @@ const AddPaymentForm: React.FC<AddPaymentFromProps> = ({
                             onClick={hanleSave}
                             id="btn-primary"
                         >
-                            {isEditing ? "Save" : "Add"}
+                            {isEditing ? "Editar" : "Guardar"}
                         </button>
                         <button
                             style={{

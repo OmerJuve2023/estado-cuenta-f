@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import "../../CSS/AddForm.css";
 import {OrderDetail} from "../../classes/OrderDetail.ts";
 import {addOrderDetailS, updateOrderDetailS} from "./orderDetailService.ts";
+import {getProductByNameS} from "../product/ProductService.ts";
 
 interface AddOrderDetailFormProps {
     showModal: boolean;
@@ -11,28 +12,30 @@ interface AddOrderDetailFormProps {
     editingOrderDetail: OrderDetail | null;
 }
 
-Modal.setAppElement('#root');
+Modal.setAppElement("#root");
 
 const AddOrderDetailForm: React.FC<AddOrderDetailFormProps> = ({
                                                                    showModal,
                                                                    handleModalToggle,
                                                                    updateOrderDetailList,
-                                                                   editingOrderDetail
+                                                                   editingOrderDetail,
                                                                }) => {
     const initialOrderDetailData = {
         id: 0,
         order_id: 0,
         product_id: 0,
         quantity: 0,
-        price: 0,
-        subtotal: 0
-    }
+        subtotal: 0,
+    };
 
-    const [newOrderDetailData, setNewOrderDetailData] = useState<OrderDetail>(initialOrderDetailData);
+    const [newOrderDetailData, setNewOrderDetailData] = useState<OrderDetail>(
+        initialOrderDetailData
+    );
     const [isEditing, setIsEditing] = useState(false);
+    const [products, setProducts] = useState([]);
+
 
     useEffect(() => {
-
         if (editingOrderDetail) {
             setNewOrderDetailData(editingOrderDetail);
             setIsEditing(true);
@@ -41,6 +44,19 @@ const AddOrderDetailForm: React.FC<AddOrderDetailFormProps> = ({
             setIsEditing(false);
         }
     }, [editingOrderDetail]);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const productList = await getProductByNameS();
+                setProducts(productList);
+            } catch (error) {
+                console.error("Error fetching products:", error);
+            }
+        };
+        fetchProducts();
+    }, []);
+
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
@@ -72,17 +88,17 @@ const AddOrderDetailForm: React.FC<AddOrderDetailFormProps> = ({
             <Modal
                 isOpen={showModal}
                 onRequestClose={handleModalToggle}
-                contentLabel={isEditing ? "Edit Order Detail" : "Add Order Detail"}
+                contentLabel={isEditing ? "Editar Detalles " : "Agregar Detalles"}
                 className="add-modal"
                 overlayClassName="modal-overlay"
             >
                 <h2 className="modal-title text-center">
-                    {isEditing ? "Edit Order Detail" : "Add Order Detail"}
+                    {isEditing ? "Editar Detalles" : "Agregar Detalles"}
                 </h2>
                 <form>
                     <div>
                         <div className="form-group">
-                            <label htmlFor="order_id">Order ID</label>
+                            <label htmlFor="order_id">N° ID</label>
                             <input
                                 type="number"
                                 className="form-control"
@@ -93,18 +109,24 @@ const AddOrderDetailForm: React.FC<AddOrderDetailFormProps> = ({
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="product_id">Product ID</label>
-                            <input
-                                type="number"
+                            <label htmlFor="product_id">Producto</label>
+                            <select
                                 className="form-control"
                                 id="product_id"
                                 name="product_id"
                                 value={newOrderDetailData.product_id}
                                 onChange={handleInputChange}
-                            />
+                            >
+                                <option value="">Select a product...</option>
+                                {products && products.map((product) => (
+                                    <option key={product.id} value={product.id}>
+                                        {product.name}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="quantity">Quantity</label>
+                            <label htmlFor="quantity">Cantidad</label>
                             <input
                                 type="number"
                                 className="form-control"
@@ -114,33 +136,22 @@ const AddOrderDetailForm: React.FC<AddOrderDetailFormProps> = ({
                                 onChange={handleInputChange}
                             />
                         </div>
-                        <div className="form-group">
-                            <label htmlFor="price">Price</label>
-                            <input
-                                type="number"
-                                className="form-control"
-                                id="price"
-                                name="price"
-                                value={newOrderDetailData.price}
-                                onChange={handleInputChange}
-                            />
-                        </div>
                     </div>
                     <div className="d-flex justify-content-center mt-3 button-container">
                         <button
                             style={{
-                                border: "none"
+                                border: "none",
                             }}
                             type="button"
                             className="btn btn-primary"
                             onClick={handleCreateOrderDetail}
                             id="btn-primary"
                         >
-                            {isEditing ? "Save Changes" : "Create Order Detail"}
+                            {isEditing ? "Editar" : "Crear"}
                         </button>
                         <button
                             style={{
-                                border: "none"
+                                border: "none",
                             }}
                             type="button"
                             className="btn btn-danger"
@@ -151,7 +162,6 @@ const AddOrderDetailForm: React.FC<AddOrderDetailFormProps> = ({
                         </button>
                     </div>
                 </form>
-
             </Modal>
         </>
     );

@@ -1,5 +1,10 @@
 import {useEffect, useState} from "react";
-import {createCustomer, deleteCustomer, listCustomers, updateCustomer} from "../../services/customerService.ts";
+import {
+    createCustomer,
+    deleteCustomer,
+    listCustomers,
+    updateCustomer
+} from "../../services/customerService.ts";
 import Customer from "../../classes/Customer.ts";
 
 export function useCustomers() {

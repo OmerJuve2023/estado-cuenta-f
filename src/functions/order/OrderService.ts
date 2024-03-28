@@ -1,6 +1,13 @@
 import {useEffect, useState} from "react";
 import {Orders} from "../../classes/Orders.ts";
-import {addOrder, createOrder, deleteOrder, listOrders, updateOrder} from "../../services/OrdersService.ts";
+import {
+    addOrder,
+    createOrder,
+    deleteOrder,
+    getOrderByAvailable, getOrderByCustomer,
+    listOrders,
+    updateOrder
+} from "../../services/OrdersService.ts";
 
 export function useOrders() {
     const [orders, setOrders] = useState<Orders[]>([]);
@@ -53,6 +60,24 @@ export const deleteOrderS = async (orderId: number) => {
         await deleteOrder(orderId);
     } catch (error) {
         console.error("Error al eliminar pedido:", error);
+        throw error;
+    }
+}
+
+export const getOrderByAvailableS= async () => {
+    try {
+        return  await getOrderByAvailable();
+    }catch (error) {
+        console.error("Error al obtener pedidos disponibles:", error);
+        throw error;
+    }
+}
+
+export const getOrderByCustomerS = async (id: number) => {
+    try {
+        return await getOrderByCustomer(id);
+    }catch (error) {
+        console.error("Error al obtener el nombre del cliente:", error);
         throw error;
     }
 }
